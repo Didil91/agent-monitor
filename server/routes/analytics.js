@@ -8,6 +8,7 @@ const { stmts, db } = require("../db");
 const { parseSources } = require("../lib/source-filter");
 const { parseProviders } = require("../lib/provider-filter");
 const scoped = require("../lib/scoped-stats");
+const { buildDiagnostic, collectSessionMetrics } = require("../lib/session-diagnostic");
 
 const { calculateProviderCost } = require("./pricing");
 
@@ -95,6 +96,27 @@ router.get("/", (req, res) => {
     overview,
     agents_by_status: Object.fromEntries(agentsByStatus.map((r) => [r.status, r.count])),
     sessions_by_status: Object.fromEntries(sessionsByStatus.map((r) => [r.status, r.count])),
+  });
+});
+
+const DIAGNOSTIC_DEFAULT_DAYS = 30;
+const DIAGNOSTIC_MAX_DAYS = 365;
+
+// Sessions far above the user's own habits (P90 vs guardrail per metric).
+router.get("/diagnostic", (req, res) => {
+  const requestedDays = parseInt(req.query.days, 10);
+  const days = Number.isFinite(requestedDays)
+    ? Math.min(Math.max(requestedDays, 1), DIAGNOSTIC_MAX_DAYS)
+    : DIAGNOSTIC_DEFAULT_DAYS;
+  const sessionMetrics = collectSessionMetrics(db, {
+    days,
+    sources: parseSources(req),
+    providers: parseProviders(req),
+  });
+  res.json({
+    period_days: days,
+    sample_size: sessionMetrics.length,
+    ...buildDiagnostic(sessionMetrics),
   });
 });
 

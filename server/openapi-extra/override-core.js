@@ -6,6 +6,7 @@
  *   GET  /api/events/facets
  *   GET  /api/stats
  *   GET  /api/analytics
+ *   GET  /api/analytics/diagnostic
  *   POST /api/hooks/event
  *
  * These operations are intentionally CONTRACT-IDENTICAL to the base spec. Every
@@ -268,6 +269,83 @@ const paths = {
                   active: 3,
                   completed: 175,
                   error: 6,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  "/api/analytics/diagnostic": {
+    get: {
+      tags: ["Analytics"],
+      summary: "List atypical sessions",
+      operationId: "getSessionDiagnostic",
+      description:
+        "Compares every finished, non-empty session started in the last `days` days on five " +
+        "metrics (cost, tokens, duration_min, compactions, tool_calls). Each metric's " +
+        "threshold is max(P90 of the period, fixed guardrail: $1, 2M tokens, 30 min, 2 " +
+        "compactions, 200 tool calls); the P90 needs at least 10 sessions. A session is " +
+        "listed when at least one metric exceeds its threshold, most extreme first. " +
+        "`limits` holds codes for what the diagnostic cannot measure " +
+        "(tool_errors_not_captured, active_sessions_excluded, cost_estimated, small_sample, " +
+        "cursor_cost_unreliable). Honors the `sources` and `providers` scope. Read-only.",
+      parameters: [
+        {
+          name: "days",
+          in: "query",
+          schema: { type: "integer", minimum: 1, maximum: 365, default: 30 },
+          description: "Period in days, clamped to 1..365.",
+        },
+      ],
+      responses: {
+        200: {
+          description: "Diagnostic",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  period_days: { type: "integer" },
+                  sample_size: { type: "integer" },
+                  thresholds: {
+                    type: "object",
+                    additionalProperties: {
+                      type: "object",
+                      properties: {
+                        p90: { type: "number", nullable: true },
+                        guardrail: { type: "number" },
+                        threshold: { type: "number" },
+                      },
+                    },
+                  },
+                  sessions: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        id: { type: "string" },
+                        name: { type: "string", nullable: true },
+                        started_at: { type: "string" },
+                        provider: { type: "string" },
+                        flags: {
+                          type: "array",
+                          items: {
+                            type: "object",
+                            properties: {
+                              metric: { type: "string" },
+                              value: { type: "number" },
+                              threshold: { type: "number" },
+                              ratio: { type: "number" },
+                              kind: { type: "string", enum: ["measured", "estimated"] },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                  limits: { type: "array", items: { type: "string" } },
                 },
               },
             },
