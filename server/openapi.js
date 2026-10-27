@@ -653,12 +653,32 @@ function createOpenApiSpec() {
             },
             event_kind: {
               type: "string",
-              enum: ["rename"],
+              enum: ["rename", "compaction"],
               description: "For type === session_event: the TUI action this marker represents.",
             },
             title: {
               type: "string",
               description: "For type === session_event: the new session title.",
+            },
+            trigger: {
+              type: "string",
+              nullable: true,
+              description: "For a compaction marker: what fired it (auto or manual).",
+            },
+            pre_tokens: {
+              type: "integer",
+              nullable: true,
+              description: "For a compaction marker: context size in tokens before compaction.",
+            },
+            duration_ms: {
+              type: "integer",
+              nullable: true,
+              description: "For a compaction marker: compaction duration in milliseconds.",
+            },
+            compact_summary: {
+              type: "boolean",
+              description:
+                "True on the summary message that replaced the compacted history (sender system).",
             },
           },
         },

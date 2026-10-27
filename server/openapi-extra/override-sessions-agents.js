@@ -25,6 +25,7 @@
  *   - GET   /api/sessions/{id}/transcripts      (listSessionTranscripts)
  *   - GET   /api/sessions/{id}/transcript       (getSessionTranscript)
  *   - GET   /api/sessions/{id}/transcript-image (getTranscriptImage)
+ *   - GET   /api/sessions/{id}/context-timeline (getSessionContextTimeline)
  *   - GET   /api/agents                         (listAgents)
  *   - POST  /api/agents                         (createAgent)
  *   - GET   /api/agents/{id}                     (getAgent)
@@ -668,6 +669,68 @@ const paths = {
               schema: { $ref: "#/components/schemas/ErrorResponse" },
               example: { error: { code: "NOT_FOUND", message: "Session not found" } },
             },
+          },
+        },
+      },
+    },
+  },
+  "/api/sessions/{id}/context-timeline": {
+    get: {
+      tags: ["Sessions"],
+      summary: "Context-window size per turn and compaction details",
+      description:
+        "Reads the session's main Claude transcript (live file, else the durable snapshot) and returns the context size at each assistant turn (input + cache read + cache creation, one point per message.id) plus one row per compaction boundary. Non-Claude sessions and pruned transcripts return empty arrays. Read-only, no side effects.",
+      operationId: "getSessionContextTimeline",
+      parameters: [{ $ref: "#/components/parameters/SessionIdPath" }],
+      responses: {
+        200: {
+          description: "Context timeline",
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                required: ["points", "compactions"],
+                properties: {
+                  points: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        turn: { type: "integer", minimum: 1 },
+                        timestamp: { type: "string", nullable: true },
+                        context_tokens: { type: "integer", minimum: 0 },
+                      },
+                    },
+                  },
+                  compactions: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        uuid: { type: "string", nullable: true },
+                        timestamp: { type: "string", nullable: true },
+                        trigger: { type: "string", nullable: true },
+                        pre_tokens: { type: "integer", nullable: true },
+                        post_tokens: { type: "integer", nullable: true },
+                        duration_ms: { type: "integer", nullable: true },
+                        replaced_messages: { type: "integer", minimum: 0 },
+                        after_turn: {
+                          type: "integer",
+                          minimum: 0,
+                          description: "Number of assistant turns before this boundary.",
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        404: {
+          description: "Session not found",
+          content: {
+            "application/json": { schema: { $ref: "#/components/schemas/ErrorResponse" } },
           },
         },
       },

@@ -18,6 +18,7 @@ const { parseSources, sourceColumnClause } = require("../lib/source-filter");
 const { parseProviders, providerColumnClause } = require("../lib/provider-filter");
 const { getCodexProcessSessions } = require("../lib/codex-process-overlay");
 const { extractSessionTaskProgress } = require("../lib/task-progress");
+const { readContextTimeline } = require("../lib/context-timeline");
 const {
   getClaudeHome,
   getProjectsDir,
@@ -1823,6 +1824,31 @@ router.get("/:id/transcript", async (req, res) => {
 // GET /:id/transcript-image — Stream one image that is explicitly referenced
 // by one persisted Claude transcript line. The client receives this opaque
 // same-origin URL rather than the machine's absolute screenshot path.
+// Context-window size per assistant turn plus one row per compaction, for the
+// session overview chart. Claude transcripts only; other providers and
+// pruned transcripts yield an empty timeline rather than an error.
+router.get("/:id/context-timeline", async (req, res) => {
+  const session = stmts.getSession.get(req.params.id);
+  if (!session || !sessionIsInScope(session, req)) {
+    return res.status(404).json({ error: { code: "NOT_FOUND", message: "Session not found" } });
+  }
+  const emptyTimeline = { points: [], compactions: [] };
+  if (session.provider && session.provider !== "claude") return res.json(emptyTimeline);
+
+  const jsonlPath = resolveSessionTranscriptPath(session, req.params.id, null, null);
+  if (!jsonlPath || !fs.existsSync(jsonlPath)) return res.json(emptyTimeline);
+  try {
+    res.json(await readContextTimeline(jsonlPath));
+  } catch (err) {
+    // Pruned between the existence check and the read: same as a missing file.
+    if (err.code === "ENOENT") return res.json(emptyTimeline);
+    console.error(`[context-timeline] Failed to read ${jsonlPath}:`, err);
+    res.status(500).json({
+      error: { code: "TRANSCRIPT_READ_FAILED", message: "Could not read the session transcript" },
+    });
+  }
+});
+
 router.get("/:id/transcript-image", async (req, res) => {
   const session = stmts.getSession.get(req.params.id);
   if (!session || !sessionIsInScope(session, req)) {
