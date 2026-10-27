@@ -84,5 +84,11 @@
     "transcript": {
       "loadOlder": "↑ 加载更早的消息"
     }
-  }
+  },
+  "compactionTitle": "上下文已压缩",
+  "compactionSummarized": "已摘要 {{tokens}} 个 token",
+  "compactionTriggerAuto": "自动",
+  "compactionTriggerManual": "手动 (/compact)",
+  "compactionTook": "耗时 {{duration}}",
+  "compactionSummaryToggle": "替代历史记录的摘要"
 }

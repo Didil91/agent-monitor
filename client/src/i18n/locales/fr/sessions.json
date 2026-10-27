@@ -84,5 +84,11 @@
       "loadOlder": "↑ Charger les messages plus anciens"
     }
   },
-  "remoteSourceBadgeTitle": "Collecté depuis une machine distante"
+  "remoteSourceBadgeTitle": "Collecté depuis une machine distante",
+  "compactionTitle": "Contexte compacté",
+  "compactionSummarized": "{{tokens}} tokens résumés",
+  "compactionTriggerAuto": "automatique",
+  "compactionTriggerManual": "manuelle (/compact)",
+  "compactionTook": "en {{duration}}",
+  "compactionSummaryToggle": "Résumé qui a remplacé l'historique"
 }

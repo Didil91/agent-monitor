@@ -84,5 +84,11 @@
     "transcript": {
       "loadOlder": "↑ 이전 메시지 불러오기"
     }
-  }
+  },
+  "compactionTitle": "컨텍스트 압축됨",
+  "compactionSummarized": "토큰 {{tokens}}개 요약됨",
+  "compactionTriggerAuto": "자동",
+  "compactionTriggerManual": "수동 (/compact)",
+  "compactionTook": "{{duration}} 소요",
+  "compactionSummaryToggle": "기록을 대체한 요약"
 }

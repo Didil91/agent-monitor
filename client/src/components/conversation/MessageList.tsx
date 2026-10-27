@@ -61,7 +61,9 @@
  * ----------------------------------------------------------------------------- */
 
 import { useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
+  FoldVertical,
   ChevronDown,
   ChevronRight,
   Bot,
@@ -128,7 +130,7 @@ const SENDER_STYLES: Record<
 };
 import { ToolCallBlock } from "./ToolCallBlock";
 import { MarkdownContent } from "./MarkdownContent";
-import { fmt, formatModelName, getCurrentLocale } from "../../lib/format";
+import { fmt, formatModelName, formatMs, getCurrentLocale } from "../../lib/format";
 import { parseTuiSegments, stripAnsi, hasTuiTags, type TuiSegment } from "./tuiSegments";
 
 interface MessageListProps {
@@ -204,6 +206,70 @@ function SessionEventRow({ title, timestamp }: { title?: string; timestamp: stri
           </span>
         )}
       </div>
+    </div>
+  );
+}
+
+/** A compaction boundary drawn as a seam across the conversation: everything
+ *  above it was replaced by the summary that follows. */
+function CompactionSeam({ message }: { message: TranscriptMessage }) {
+  const { t } = useTranslation("sessions");
+  const trigger =
+    message.trigger === "auto"
+      ? t("compactionTriggerAuto")
+      : message.trigger === "manual"
+        ? t("compactionTriggerManual")
+        : null;
+  return (
+    <div className="flex items-center gap-3 py-2" role="separator">
+      <div className="h-px flex-1 bg-gradient-to-r from-transparent to-amber-400/40" />
+      <div className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 rounded-lg border border-amber-400/30 bg-amber-400/[0.07] px-3 py-1.5 text-[11px]">
+        <FoldVertical className="h-3.5 w-3.5 flex-shrink-0 text-amber-300" />
+        <span className="font-semibold text-amber-200">{t("compactionTitle")}</span>
+        {message.pre_tokens != null && (
+          <span className="text-amber-100/80">
+            {t("compactionSummarized", { tokens: fmt(message.pre_tokens) })}
+          </span>
+        )}
+        {trigger && (
+          <span className="rounded bg-amber-400/15 px-1.5 py-0.5 text-[10px] text-amber-200/90">
+            {trigger}
+          </span>
+        )}
+        {message.duration_ms != null && (
+          <span className="text-gray-500">
+            {t("compactionTook", { duration: formatMs(message.duration_ms) })}
+          </span>
+        )}
+        {message.timestamp && (
+          <span className="font-mono text-[10px] text-gray-600">
+            {formatLocalTime(message.timestamp)}
+          </span>
+        )}
+      </div>
+      <div className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-400/40" />
+    </div>
+  );
+}
+
+/** The summary Claude Code injected in place of the compacted history,
+ *  collapsed by default so it reads as a reference, not as a turn. */
+function CompactionSummary({ message }: { message: TranscriptMessage }) {
+  const { t } = useTranslation("sessions");
+  const text = message.content
+    .filter((block) => block.type === "text")
+    .map((block) => block.text)
+    .join("\n\n");
+  return (
+    <div className="mx-auto max-w-3xl">
+      <CollapsibleBlock
+        text={text}
+        icon={<ScrollText className="w-3.5 h-3.5 text-amber-300/70 flex-shrink-0" />}
+        title={t("compactionSummaryToggle")}
+        borderClass="border-amber-400/20"
+        bgClass="bg-amber-400/[0.04]"
+        textClass="text-amber-200/80"
+      />
     </div>
   );
 }
@@ -377,8 +443,10 @@ export function MessageList({ messages, loading }: MessageListProps) {
         // Session lifecycle markers (e.g. /rename) render as a centered chip,
         // not as a user/assistant row.
         if (msg.type === "session_event") {
+          if (msg.event_kind === "compaction") return <CompactionSeam key={idx} message={msg} />;
           return <SessionEventRow key={idx} title={msg.title} timestamp={msg.timestamp} />;
         }
+        if (msg.compact_summary) return <CompactionSummary key={idx} message={msg} />;
 
         // Skip user messages that are purely tool_result - they're rendered inside ToolCallBlock
         if (msg.type === "user" && !userMsgHasText.get(idx)) {

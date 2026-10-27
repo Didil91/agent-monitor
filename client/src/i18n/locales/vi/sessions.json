@@ -84,5 +84,11 @@
     "transcript": {
       "loadOlder": "↑ Tải các tin nhắn cũ hơn"
     }
-  }
+  },
+  "compactionTitle": "Đã nén ngữ cảnh",
+  "compactionSummarized": "Đã tóm tắt {{tokens}} token",
+  "compactionTriggerAuto": "tự động",
+  "compactionTriggerManual": "thủ công (/compact)",
+  "compactionTook": "trong {{duration}}",
+  "compactionSummaryToggle": "Bản tóm tắt thay thế lịch sử"
 }
