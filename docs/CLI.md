@@ -173,6 +173,7 @@ When the server is down, **read-only commands automatically fall back to reading
 | Command | Description |
 | ------- | ----------- |
 | `ccam analytics` | Token totals (input / output / cache read / cache write), top tools by call count, agent-type distribution, average events per session |
+| `ccam diagnostic [--days n]` | Atypical sessions over the last `n` days (default 30): per-metric threshold (your P90 or a fixed floor), the sessions above it with the ratio per metric, and what is not measured |
 | `ccam workflows [--session id]` | Workflow-intelligence stats (sessions analyzed, subagents, success rate, depth, compactions) and the top detected patterns; `--session` drills into one session |
 | `ccam runs [--session id]` | Dynamic Workflow-tool runs: status, agent count, tokens, tool calls, duration |
 | `ccam run list\|history\|get <id>` | Inspect live dashboard-launched Claude Code/Codex handles and persisted run history |

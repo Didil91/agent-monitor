@@ -76,6 +76,7 @@ Tune the timeout with `MCP_HTTP_SESSION_TIMEOUT_MS` (default 30 minutes, floor 6
 - `dashboard_health_check`
 - `dashboard_get_stats`
 - `dashboard_get_analytics`
+- `dashboard_get_session_diagnostic`
 - `dashboard_get_system_info`
 - `dashboard_export_data`
 - `dashboard_get_operational_snapshot`

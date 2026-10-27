@@ -545,6 +545,10 @@ components:
             - interrupted
           nullable: true
           description: 'Why this agent is awaiting input: ''notification'' (Claude asked the user something), ''stop'' (turn completed, waiting for the next prompt), ''session_start'' (new/resumed session waiting for the first prompt), or ''interrupted'' (watchdog/Esc recovery). Null when not waiting; cleared alongside awaiting_input_since.'
+        claude_agent_id:
+          type: string
+          nullable: true
+          description: Claude Code's own id for a hook-created subagent (the agentId of the Agent tool response, matching its agent-<id>.jsonl transcript). SubagentStop resolves the stopped subagent by it. Null for main agents and rows that were never bound.
     DashboardEvent:
       type: object
       required:
@@ -788,10 +792,26 @@ components:
           type: string
           enum:
             - rename
+            - compaction
           description: 'For type === session_event: the TUI action this marker represents.'
         title:
           type: string
           description: 'For type === session_event: the new session title.'
+        trigger:
+          type: string
+          nullable: true
+          description: 'For a compaction marker: what fired it (auto or manual).'
+        pre_tokens:
+          type: integer
+          nullable: true
+          description: 'For a compaction marker: context size in tokens before compaction.'
+        duration_ms:
+          type: integer
+          nullable: true
+          description: 'For a compaction marker: compaction duration in milliseconds.'
+        compact_summary:
+          type: boolean
+          description: True on the summary message that replaced the compacted history (sender system).
     TranscriptResponse:
       type: object
       required:
@@ -11102,6 +11122,76 @@ paths:
                 error:
                   code: WORKFLOW_DETAIL_FAILED
                   message: database is locked
+  /api/sessions/{id}/context-timeline:
+    get:
+      tags:
+        - Sessions
+      summary: Context-window size per turn and compaction details
+      description: Reads the session's main Claude transcript (live file, else the durable snapshot) and returns the context size at each assistant turn (input + cache read + cache creation, one point per message.id) plus one row per compaction boundary. Non-Claude sessions and pruned transcripts return empty arrays. Read-only, no side effects.
+      operationId: getSessionContextTimeline
+      parameters:
+        - $ref: '#/components/parameters/SessionIdPath'
+      responses:
+        '200':
+          description: Context timeline
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - points
+                  - compactions
+                properties:
+                  points:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        turn:
+                          type: integer
+                          minimum: 1
+                        timestamp:
+                          type: string
+                          nullable: true
+                        context_tokens:
+                          type: integer
+                          minimum: 0
+                  compactions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                          nullable: true
+                        timestamp:
+                          type: string
+                          nullable: true
+                        trigger:
+                          type: string
+                          nullable: true
+                        pre_tokens:
+                          type: integer
+                          nullable: true
+                        post_tokens:
+                          type: integer
+                          nullable: true
+                        duration_ms:
+                          type: integer
+                          nullable: true
+                        replaced_messages:
+                          type: integer
+                          minimum: 0
+                        after_turn:
+                          type: integer
+                          minimum: 0
+                          description: Number of assistant turns before this boundary.
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /api/sessions/{id}/transcript-image:
     get:
       tags:
@@ -11159,6 +11249,82 @@ paths:
           description: The line or image index is invalid.
         '404':
           description: Session, transcript, persisted image, or allowed image type was not found.
+  /api/analytics/diagnostic:
+    get:
+      tags:
+        - Analytics
+      summary: List atypical sessions
+      operationId: getSessionDiagnostic
+      description: 'Compares every finished, non-empty session started in the last `days` days on five metrics (cost, tokens, duration_min, compactions, tool_calls). Each metric''s threshold is max(P90 of the period, fixed guardrail: $1, 2M tokens, 30 min, 2 compactions, 200 tool calls); the P90 needs at least 10 sessions. A session is listed when at least one metric exceeds its threshold, most extreme first. `limits` holds codes for what the diagnostic cannot measure (tool_errors_not_captured, active_sessions_excluded, cost_estimated, small_sample, cursor_cost_unreliable). Honors the `sources` and `providers` scope. Read-only.'
+      parameters:
+        - name: days
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 365
+            default: 30
+          description: Period in days, clamped to 1..365.
+      responses:
+        '200':
+          description: Diagnostic
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  period_days:
+                    type: integer
+                  sample_size:
+                    type: integer
+                  thresholds:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        p90:
+                          type: number
+                          nullable: true
+                        guardrail:
+                          type: number
+                        threshold:
+                          type: number
+                  sessions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                          nullable: true
+                        started_at:
+                          type: string
+                        provider:
+                          type: string
+                        flags:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              metric:
+                                type: string
+                              value:
+                                type: number
+                              threshold:
+                                type: number
+                              ratio:
+                                type: number
+                              kind:
+                                type: string
+                                enum:
+                                  - measured
+                                  - estimated
+                  limits:
+                    type: array
+                    items:
+                      type: string
   /api/settings/import:
     post:
       tags:

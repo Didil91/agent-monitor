@@ -11,6 +11,7 @@ Comprehensive documentation for the Agent Dashboard project.
 - [Architecture Overview](../ARCHITECTURE.md) - System design and technical reference
 - [I18N Architecture](./I18N.md) - Internationalization architecture and usage guide
 - [CLI Reference](./CLI.md) - The `ccam` terminal CLI: every command, discovery, safety model
+- [Récapitulatif des fonctionnalités](./FEATURES.md) - Tout ce que l'outil permet, rangé par besoin (en français)
 - [Setup Guide](../SETUP.md) - Installation and configuration
 - [Installation](../INSTALL.md) - Detailed installation instructions
 

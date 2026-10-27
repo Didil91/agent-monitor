@@ -343,6 +343,8 @@ Dashboard 提供全面的功能来监控和分析你的 Claude Code 会话和 Ag
 | **MCP 服务器（本地）** | 位于 `mcp/` 的完整本地 MCP 服务器，支持三种传输模式，16 个领域模块共 97 个类型化工具。覆盖应用支持的全部操作：带作用域的数据读取、Transcript 与图片、Claude/Cursor/GPT 定价、工作流、告警、Webhook、导入与恢复、Claude/Codex 配置、Run Agent、远程数据源、Hook/Home/更新、推送与维护。所有传输共享同一套已验证目录，并支持分层变更/破坏性门控。直接回环 HTTP 可携带 Bearer Token，带 Token 的容器主机别名必须使用 HTTPS。请求拒绝重定向；历史上传限制为单文件 50 MiB、每次调用合计 100 MiB，二进制响应限制为 10 MiB，备份恢复限制为 25 MiB |
 | **工作流** | 基于 D3.js 的可视化页面，包含 11 个交互式模块：Agent 编排 DAG、工具执行 Sankey 图、协作网络、子 Agent 有效性（按周 sparkline 通过 portal 渲染——可越过卡片的 `overflow:hidden`，并自动夹在视口内不再被裁切）、检测到的流程模式、模型委派流、错误传播图（带比率徽章的水平条形图、Agent 类型分解、API/会话错误卡片）、并发时间线、会话复杂度散点图、压缩影响分析和按会话下钻。**全方位、多语言的丰富 tooltip：** 每个图表标题旁都有一个 `i` 图标，可弹出结构化的「此图展示了什么 / 如何阅读 / 为何重要」浮层；悬停节点、边、条、气泡都会显示带有确定性、值相关解读的多段 tooltip（例如占源/占目标比例、成功率健康分级、Opus / Sonnet / Haiku 模型系列说明，以及前段/中段/后段等时间模式）。六张总览统计卡片各自在右下角带一个信息浮层，用自然语言解释指标的计算方式与当前数值含义。Tooltip 通过每张图唯一的 DOM ref 直接更新，并附带容器级 `mouseleave` 兜底，绝不会落后于光标或在重新渲染后残留。点击 **检测到的工作流模式** 中的任意一行会就地展开详情面板，包含完整步骤序列、统计网格、确定性叙述（循环检测、频率分级）和一条务实的建议。状态筛选标签（仅活跃 / 已完成 / 全部）可筛选全部 11 个模块。支持交叉筛选、JSON 导出和 3 秒防抖的实时 WebSocket 自动刷新。**工作流运行**面板呈现「动态工作流」——由 `Workflow` 工具（及自定节奏的 `/loop`）派生的 sub-agent 群组——它们不触发任何 hook，因此改为依据磁盘上的运行日志（`workflows/wf_<runId>.json`）重建：每次运行展示其阶段以及按 Agent 的 token / 工具调用 / 时长分解，并在日志写入前实时检测 `running` 状态，同时在每个会话详情页提供一个关联子区块 |
 | **压缩追踪** | 从 JSONL Transcript 检测 `/compact` 事件,创建压缩 Agent 和事件。启动时回填历史压缩。周期性扫描器(频率从 `DASHBOARD_STALE_MINUTES` 派生)在无 Hook 触发时也能捕获压缩。共享 Transcript 缓存,避免重复文件读取 |
+| **上下文窗口** | 会话详情的概览图表展示每个助手回合发送的上下文大小(输入 + 缓存读取 + 缓存创建,每条 API 消息一个点),在每次压缩处标注编号,并在曲线下方列出每次压缩:压缩前 → 压缩后的大小、释放的上下文占比、触发方式(自动或 `/compact`)以及摘要替换的消息数。在对话标签页中,压缩以贯穿对话的分隔线呈现,标明触发方式、压缩前大小和耗时;Claude Code 注入以替代历史的摘要默认折叠,并归属于系统而非用户。由 `GET /api/sessions/:id/context-timeline` 提供(Claude 会话;其他提供方或已清理的 Transcript 返回空) |
+| **异常会话** | 分析 → **异常会话** 对最近 7、30 或 90 天内每个已结束会话的成本、Token、时长、压缩次数和工具调用进行比较。每项指标的阈值取该时段你自己的 P90 与固定下限($1、2M Token、30 分钟、2 次压缩、200 次工具调用)中的较高者,因此整体轻量的历史不会标记无关紧要的离群值;少于 10 个会话时仅使用下限。每个被标记的会话为每项超标指标显示一个标签,按超出阈值的程度分级,成本标注为估算值,面板还说明了无法衡量的内容(工具错误、运行中的会话)。被标记的会话在其自身概览中也会显示提示。也可通过 `ccam diagnostic`、`dashboard_get_session_diagnostic` MCP 工具和 `GET /api/analytics/diagnostic` 获取 |
 | **子会话/恢复会话** | 新事件到达时自动重新激活会话,正确处理 `/resume` 和孤立会话。周期性清理(每 ¼ 个 `DASHBOARD_STALE_MINUTES`,夹在 60 秒–5 分钟之间)标记遗漏事件检测的废弃会话 |
 | **预存会话检测** | 服务器启动时已在运行的会话以"活跃"状态导入（基于近期 JSONL 文件修改时间）。Stop 事件也会重新激活已导入的完成/废弃会话，因此进行中的会话的第一个 Hook 始终会显示在 Dashboard 上 |
 | **持续项目同步** | 启动时对 `~/.claude/projects` 的自动导入是一次性的（由标记位把关），因此在首次启动**之后**才创建的项目文件夹——其会话从不经过 Hook 流入（例如 host-only Hook 被禁用）——在手动重新扫描之前都将不可见。后台同步（`startSessionSync`）通过三个共享同一个 mtime 缓存 + 单次合并扫描的触发器弥补了这个空隙：启动时的**立即**扫描、一个去抖的 **`fs.watch`**（新会话文件 / 项目文件夹一出现就触发；在 macOS/Windows 上递归监听，在 Linux 上监听根目录 + 直接子文件夹，以规避用户态递归监听器的隐患），以及一个**周期性轮询**（`DASHBOARD_SESSION_SYNC_MS`，默认 30 秒）。每次扫描只重新解析 mtime 前进过的文件，并广播 `session_created`/`session_updated`（外加主 Agent），让 UI 实时刷新；DB 中已有且未变更的会话会被跳过、不再重新解析，因此重启成本保持为 O(新增/变更文件) |
@@ -692,6 +694,7 @@ ccam events   [--session id] [--limit n]
 
 # 洞察
 ccam analytics                    # token 总量、常用工具、agent 类型
+ccam diagnostic [--days n]        # 相对于你自己 P90 的异常会话
 ccam workflows [--session id]     # 工作流智能统计与模式
 ccam runs [--session id]          # 动态 Workflow 工具运行
 ccam cost [--session <id>]        # 按模型细分的总预估成本
@@ -1156,6 +1159,7 @@ npm run monitoring:docker:up
 | `GET`   | `/api/sessions/:id/stats`       | --                                                               | 会话详情概览面板使用的聚合计数：事件总数、按类型分类的事件、Top 工具用量、错误数、按类型/状态的 Agent 数、子 Agent 类型分布、Token 总量、时间范围 |
 | `GET`   | `/api/sessions/:id/transcripts` | --                                                               | 列出会话的可用 JSONL 转录文件（主 + 子 Agent + 压缩）                                              |
 | `GET`   | `/api/sessions/:id/transcript`  | `agent_id`、`limit`、`offset`、`after`、`before`                 | 从指定转录文件流式读取消息，使用游标分页                                                          |
+| `GET`   | `/api/sessions/:id/context-timeline` | --                                                          | 每个助手回合的上下文大小,以及每次压缩一行(Claude) |
 | `POST`  | `/api/sessions`                 | --                                                               | 创建会话（基于 `id` 幂等）                                                                        |
 | `PATCH` | `/api/sessions/:id`             | --                                                               | 更新会话状态/元数据                                                                               |
 
@@ -1185,6 +1189,7 @@ npm run monitoring:docker:up
 | 方法 | 路径 | 描述 |
 | ------ | ---------------- | ---------------------------------------------------------- |
 | `GET` | `/api/analytics` | 用于图表和趋势视图的 Token / 工具 / 会话聚合数据 |
+| `GET` | `/api/analytics/diagnostic` | 相对于该时段 P90 或固定下限的异常会话(`days`,默认 30) |
 
 ### Hook
 

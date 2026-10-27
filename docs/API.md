@@ -392,6 +392,84 @@ PNG, JPEG, GIF, and WebP images are served; unavailable files return `404`.
 
 ---
 
+#### Get Context Timeline
+
+```http
+GET /api/sessions/:id/context-timeline
+```
+
+Reads the session's main Claude transcript (the live file, else the durable snapshot) and
+returns the context size sent with each assistant turn plus one row per compaction.
+`context_tokens` is `input + cache_read + cache_creation`; an API message split across
+several JSONL lines counts once, and synthetic turns with no usage are skipped. Codex and
+Cursor sessions, and pruned transcripts, return empty arrays; unknown sessions return `404`.
+
+```json
+{
+  "points": [{ "turn": 1, "timestamp": "2026-10-24T10:00:00.000Z", "context_tokens": 117788 }],
+  "compactions": [
+    {
+      "uuid": "5ae51708-…",
+      "timestamp": "2026-10-24T10:24:55.376Z",
+      "trigger": "auto",
+      "pre_tokens": 691105,
+      "post_tokens": 42000,
+      "duration_ms": 82343,
+      "replaced_messages": 312,
+      "after_turn": 57
+    }
+  ]
+}
+```
+
+`after_turn` is the number of assistant turns before the boundary (the marker's position
+on the curve); `post_tokens` stays `null` until a turn follows the compaction. The
+transcript endpoint surfaces the same boundary inline as a `session_event` with
+`event_kind: "compaction"` (`trigger`, `pre_tokens`, `duration_ms`), and flags the summary
+message that replaced the history with `compact_summary: true` and sender `system`.
+
+---
+
+#### Get Session Diagnostic
+
+```http
+GET /api/analytics/diagnostic?days={days}
+```
+
+Compares every finished, non-empty session started in the last `days` days (default 30,
+clamped to 1–365) on `cost`, `tokens`, `duration_min`, `compactions`, and `tool_calls`. Each
+metric's threshold is the higher of the period's P90 and a fixed floor ($1, 2M tokens,
+30 min, 2 compactions, 200 tool calls); the P90 needs at least 10 sessions, otherwise
+`p90` is `null` and only the floor applies. Sessions with at least one metric above its
+threshold are listed most extreme first. Honors `sources` and `providers`.
+
+```json
+{
+  "period_days": 30,
+  "sample_size": 175,
+  "thresholds": { "cost": { "p90": 38.14, "guardrail": 1, "threshold": 38.14 } },
+  "sessions": [
+    {
+      "id": "2f8218ca-…",
+      "name": "Inscription et connexion Webdev 2.0",
+      "started_at": "2026-10-09T14:07:53.207Z",
+      "provider": "claude",
+      "flags": [
+        { "metric": "cost", "value": 477.7, "threshold": 38.14, "ratio": 12.53, "kind": "estimated" }
+      ]
+    }
+  ],
+  "limits": ["tool_errors_not_captured", "active_sessions_excluded", "cost_estimated"]
+}
+```
+
+`kind` is `estimated` for cost (it depends on the price table) and `measured` otherwise.
+`limits` lists codes for what the diagnostic cannot see: `tool_errors_not_captured`,
+`active_sessions_excluded`, `cost_estimated`, plus `small_sample` (under 10 sessions) and
+`cursor_cost_unreliable` when relevant.
+
+---
+
 #### Get Session Stats
 
 ```http

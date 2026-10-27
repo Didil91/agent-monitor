@@ -2896,7 +2896,8 @@
             <h3>Reliable token accounting</h3>
             <p>
               Compaction-aware totals survive context compression, and bounded JSONL reads
-              keep multi-day sessions cheap.
+              keep multi-day sessions cheap. Each session charts its context window turn by
+              turn, and Analytics flags sessions that run past your own P90.
             </p>
           </div>
           <div class="feature-card">

@@ -1387,6 +1387,32 @@
                   </p>
                 </div>
                 <div class="feature-card">
+                  <div class="feature-icon ic-sky">📈</div>
+                  <h3>Context Window</h3>
+                  <p>
+                    The Session Detail overview charts the context sent with every assistant turn
+                    — input plus cache read and cache creation — with a numbered marker at each
+                    compaction. Below the curve, every compaction lists its size before and after,
+                    the share of context freed, its trigger (automatic or <code>/compact</code>),
+                    and how many messages the summary replaced. In the Conversation tab a
+                    compaction appears as a seam across the thread, and the injected summary is
+                    collapsed and attributed to the system.
+                  </p>
+                </div>
+                <div class="feature-card">
+                  <div class="feature-icon ic-amber">🚩</div>
+                  <h3>Atypical Sessions</h3>
+                  <p>
+                    Analytics compares every finished session of the last 7, 30, or 90 days on
+                    cost, tokens, duration, compactions, and tool calls. A metric's threshold is the
+                    higher of your own P90 and a fixed floor, so a light history never flags
+                    trivial outliers. Each flagged session gets one graded chip per exceeded metric
+                    and a notice on its own Session Detail overview. The same diagnostic is available as
+                    <code>ccam diagnostic</code> and the
+                    <code>dashboard_get_session_diagnostic</code> MCP tool.
+                  </p>
+                </div>
+                <div class="feature-card">
                   <div class="feature-icon ic-pink">🔔</div>
                   <h3>Browser Notifications</h3>
                   <p>
@@ -2514,9 +2540,10 @@ npm run mcp:start:repl         # interactive CLI with tab completion</code></pre
                 </tr>
                 <tr>
                   <td>Insights</td>
-                  <td><code>analytics</code> · <code>workflows</code> · <code>runs</code> · <code>cost</code></td>
+                  <td><code>analytics</code> · <code>diagnostic</code> · <code>workflows</code> · <code>runs</code> · <code>cost</code></td>
                   <td>
-                    Token totals and top tools, workflow-intelligence stats with detected
+                    Token totals and top tools, atypical sessions measured against your own P90
+                    (<code>--days</code>), workflow-intelligence stats with detected
                     patterns, dynamic Workflow-tool runs, and the per-model cost breakdown,
                     which can be scoped to a single session with <code>--session</code>,
                     surfaces server-tool surcharges (web search / code execution), warns about
@@ -3424,6 +3451,13 @@ npm run mcp:start:repl         # interactive CLI with tab completion</code></pre
               <span class="route-desc">Session detail with agents and events</span>
             </div>
             <div class="route-item">
+              <span class="method method-get">GET</span>
+              <span class="route-path">/api/sessions/:id/context-timeline</span>
+              <span class="route-desc"
+                >Context size per assistant turn plus one row per compaction (Claude)</span
+              >
+            </div>
+            <div class="route-item">
               <span class="method method-post">POST</span>
               <span class="route-path">/api/sessions</span>
               <span class="route-desc">Create session (idempotent on <code>id</code>)</span>
@@ -3484,6 +3518,14 @@ npm run mcp:start:repl         # interactive CLI with tab completion</code></pre
               <span class="route-path">/api/analytics</span>
               <span class="route-desc"
                 >Token totals, tool usage, daily trends, agent types, event types, averages</span
+              >
+            </div>
+            <div class="route-item">
+              <span class="method method-get">GET</span>
+              <span class="route-path">/api/analytics/diagnostic</span>
+              <span class="route-desc"
+                >Atypical sessions vs the period's P90 or a fixed floor — param:
+                <code>days</code> (default 30)</span
               >
             </div>
           </div>
@@ -7225,7 +7267,7 @@ npm run install-hooks</code></pre>
     <!-- Body-content translations — must load before script.js so the
          i18n engine sees window.__WIKI_CONTENT_I18N. Both are deferred, so they
          run in document order. -->
-    <script src="i18n-content.js?v=104" defer></script>
+    <script src="i18n-content.js?v=105" defer></script>
     <script src="script.js?v=59" defer></script>
     <script>
       (function () {

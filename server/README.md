@@ -169,7 +169,7 @@ server/
 │   ├── agents.js          # Agent CRUD API
 │   ├── events.js          # Event list API
 │   ├── stats.js           # Dashboard stats API
-│   ├── analytics.js       # Analytics aggregate API
+│   ├── analytics.js       # Analytics aggregate API + session diagnostic
 │   ├── pricing.js         # Pricing rules + cost API
 │   ├── settings.js        # Ops/settings API
 │   └── workflows.js       # Workflow intelligence API
@@ -471,6 +471,8 @@ The OpenAPI spec is generated from `server/openapi.js` (`createOpenApiSpec()`), 
 | `GET`   | `/api/events`       | List events (`session_id`, `limit`, `offset`)   |
 | `GET`   | `/api/stats`        | Dashboard aggregate counters                     |
 | `GET`   | `/api/analytics`    | Analytics aggregates for charts/trends           |
+| `GET`   | `/api/analytics/diagnostic` | Atypical sessions vs the period's P90 or a fixed floor |
+| `GET`   | `/api/sessions/:id/context-timeline` | Context size per assistant turn and compaction details |
 | `GET`   | `/api/metrics`      | Prometheus / OpenMetrics exposition (text; v0.0.4) |
 
 **Host PC metrics (`GET /api/machine`).** Returns the 5-minute in-memory window of host CPU / RAM / disk / volume / GPU samples, the latest top-process snapshot and the sensor status (`server/routes/machine.js`); see [Machine Metrics Sensor](#machine-metrics-sensor).

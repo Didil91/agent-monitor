@@ -272,8 +272,8 @@ window.__WIKI_CONTENT_I18N = {
     "Filterable tables plus a per-session deep dive with an indented agent tree, per-session cost, and the most recent events":
       "可筛选的表格，外加按会话的深入视图：缩进的 agent 树、单会话成本以及最近的事件",
     Insights: "洞察",
-    "Token totals and top tools, workflow-intelligence stats with detected patterns, dynamic Workflow-tool runs, and the per-model cost breakdown, which can be scoped to a single session with <code>--session</code>, surfaces server-tool surcharges (web search / code execution), warns about models with usage but no matching pricing rule (priced at $0, excluded from the total), and points to <code>ccam pricing set</code>":
-      "Token 总量与最常用工具、带已检测模式的工作流智能统计、动态 Workflow 工具运行，以及按模型的成本细分——可用 <code>--session</code> 限定到单个会话，会显示服务器工具附加费用（网页搜索 / 代码执行），当某个模型有用量却没有匹配的定价规则时会发出警告（按 $0 计价并从总额中排除），并提示用 <code>ccam pricing set</code> 修复",
+    "Token totals and top tools, atypical sessions measured against your own P90 (<code>--days</code>), workflow-intelligence stats with detected patterns, dynamic Workflow-tool runs, and the per-model cost breakdown, which can be scoped to a single session with <code>--session</code>, surfaces server-tool surcharges (web search / code execution), warns about models with usage but no matching pricing rule (priced at $0, excluded from the total), and points to <code>ccam pricing set</code>":
+      "Token 总量与最常用工具、相对你自己 P90 的异常会话（<code>--days</code>）、带已检测模式的工作流智能统计、动态 Workflow 工具运行，以及按模型的成本细分——可用 <code>--session</code> 限定到单个会话，会显示服务器工具附加费用（网页搜索 / 代码执行），当某个模型有用量却没有匹配的定价规则时会发出警告（按 $0 计价并从总额中排除），并提示用 <code>ccam pricing set</code> 修复",
     "Alerts &amp; Webhooks": "告警 &amp; Webhook",
     "The fired-alert feed with acknowledge / acknowledge-all, the rule list, and synthetic test deliveries against any webhook target":
       "触发告警流（支持单条/全部确认）、规则列表，以及对任意 webhook 目标的合成测试投递",
@@ -1766,8 +1766,8 @@ window.__WIKI_CONTENT_I18N = {
     "Filterable tables plus a per-session deep dive with an indented agent tree, per-session cost, and the most recent events":
       "Các bảng có bộ lọc, cộng thêm góc nhìn sâu theo phiên: cây agent thụt lề, chi phí từng phiên và các sự kiện gần nhất",
     Insights: "Phân tích",
-    "Token totals and top tools, workflow-intelligence stats with detected patterns, dynamic Workflow-tool runs, and the per-model cost breakdown, which can be scoped to a single session with <code>--session</code>, surfaces server-tool surcharges (web search / code execution), warns about models with usage but no matching pricing rule (priced at $0, excluded from the total), and points to <code>ccam pricing set</code>":
-      "Tổng token và các công cụ dùng nhiều nhất, thống kê workflow-intelligence với các mẫu được phát hiện, các lần chạy Workflow động, và phân tích chi phí theo model — có thể giới hạn vào một phiên duy nhất bằng <code>--session</code>, hiển thị phụ phí công cụ máy chủ (tìm kiếm web / thực thi mã), cảnh báo khi một model có mức sử dụng nhưng không có quy tắc định giá khớp (tính giá $0, bị loại khỏi tổng) và chỉ tới <code>ccam pricing set</code>",
+    "Token totals and top tools, atypical sessions measured against your own P90 (<code>--days</code>), workflow-intelligence stats with detected patterns, dynamic Workflow-tool runs, and the per-model cost breakdown, which can be scoped to a single session with <code>--session</code>, surfaces server-tool surcharges (web search / code execution), warns about models with usage but no matching pricing rule (priced at $0, excluded from the total), and points to <code>ccam pricing set</code>":
+      "Tổng token và các công cụ dùng nhiều nhất, các phiên bất thường so với P90 của chính bạn (<code>--days</code>), thống kê workflow-intelligence với các mẫu được phát hiện, các lần chạy Workflow động, và phân tích chi phí theo model — có thể giới hạn vào một phiên duy nhất bằng <code>--session</code>, hiển thị phụ phí công cụ máy chủ (tìm kiếm web / thực thi mã), cảnh báo khi một model có mức sử dụng nhưng không có quy tắc định giá khớp (tính giá $0, bị loại khỏi tổng) và chỉ tới <code>ccam pricing set</code>",
     "Alerts &amp; Webhooks": "Cảnh báo &amp; Webhook",
     "The fired-alert feed with acknowledge / acknowledge-all, the rule list, and synthetic test deliveries against any webhook target":
       "Luồng cảnh báo đã kích hoạt (xác nhận từng cái / tất cả), danh sách quy tắc, và gửi thử tổng hợp tới bất kỳ đích webhook nào",
@@ -3253,8 +3253,8 @@ window.__WIKI_CONTENT_I18N = {
     "Filterable tables plus a per-session deep dive with an indented agent tree, per-session cost, and the most recent events":
       "필터링 가능한 테이블과 세션별 심층 보기: 들여쓰기된 에이전트 트리, 세션별 비용, 최근 이벤트",
     Insights: "인사이트",
-    "Token totals and top tools, workflow-intelligence stats with detected patterns, dynamic Workflow-tool runs, and the per-model cost breakdown, which can be scoped to a single session with <code>--session</code>, surfaces server-tool surcharges (web search / code execution), warns about models with usage but no matching pricing rule (priced at $0, excluded from the total), and points to <code>ccam pricing set</code>":
-      "토큰 총량과 상위 도구, 감지된 패턴이 포함된 워크플로 인텔리전스 통계, 동적 Workflow 도구 실행, 모델별 비용 분석 — <code>--session</code>으로 단일 세션에 한정할 수 있고, 서버 도구 추가 요금(웹 검색 / 코드 실행)을 표시하며, 사용량은 있지만 일치하는 가격 규칙이 없는 모델($0으로 계산되어 총액에서 제외)을 경고하고 <code>ccam pricing set</code>을 안내합니다",
+    "Token totals and top tools, atypical sessions measured against your own P90 (<code>--days</code>), workflow-intelligence stats with detected patterns, dynamic Workflow-tool runs, and the per-model cost breakdown, which can be scoped to a single session with <code>--session</code>, surfaces server-tool surcharges (web search / code execution), warns about models with usage but no matching pricing rule (priced at $0, excluded from the total), and points to <code>ccam pricing set</code>":
+      "토큰 총량과 상위 도구, 사용자 자신의 P90 대비 이상 세션(<code>--days</code>), 감지된 패턴이 포함된 워크플로 인텔리전스 통계, 동적 Workflow 도구 실행, 모델별 비용 분석 — <code>--session</code>으로 단일 세션에 한정할 수 있고, 서버 도구 추가 요금(웹 검색 / 코드 실행)을 표시하며, 사용량은 있지만 일치하는 가격 규칙이 없는 모델($0으로 계산되어 총액에서 제외)을 경고하고 <code>ccam pricing set</code>을 안내합니다",
     "Alerts &amp; Webhooks": "알림 &amp; Webhook",
     "The fired-alert feed with acknowledge / acknowledge-all, the rule list, and synthetic test deliveries against any webhook target":
       "발생 알림 피드(개별/전체 확인), 규칙 목록, 그리고 임의의 webhook 대상에 대한 합성 테스트 전송",
@@ -4737,8 +4737,8 @@ window.__WIKI_CONTENT_I18N = {
     "Filterable tables plus a per-session deep dive with an indented agent tree, per-session cost, and the most recent events":
       "Tablas filtrables más un análisis profundo por sesión con un árbol de agentes hundido, costo por sesión y los eventos más recientes",
     Insights: "Perspectivas",
-    "Token totals and top tools, workflow-intelligence stats with detected patterns, dynamic Workflow-tool runs, and the per-model cost breakdown, which can be scoped to a single session with <code>--session</code>, surfaces server-tool surcharges (web search / code execution), warns about models with usage but no matching pricing rule (priced at $0, excluded from the total), and points to <code>ccam pricing set</code>":
-      "Totales de tokens y herramientas principales, estadísticas de inteligencia de flujo de trabajo con patrones detectados, ejecuciones dinámicas de herramientas de flujo de trabajo y la desglose de costos por modelo, que se pueden limitar a una sola sesión con <code>--session</code>, muestra recargos por herramientas de servidor de las superficies (búsqueda web / ejecución de código), advierte sobre modelos con uso pero sin una regla de precios correspondiente (preciados a 0 $, excluidos del total) y señala a <code>ccam pricing set</code>",
+    "Token totals and top tools, atypical sessions measured against your own P90 (<code>--days</code>), workflow-intelligence stats with detected patterns, dynamic Workflow-tool runs, and the per-model cost breakdown, which can be scoped to a single session with <code>--session</code>, surfaces server-tool surcharges (web search / code execution), warns about models with usage but no matching pricing rule (priced at $0, excluded from the total), and points to <code>ccam pricing set</code>":
+      "Totales de tokens y herramientas principales, sesiones atípicas frente a tu propio P90 (<code>--days</code>), estadísticas de inteligencia de flujo de trabajo con patrones detectados, ejecuciones dinámicas de herramientas de flujo de trabajo y la desglose de costos por modelo, que se pueden limitar a una sola sesión con <code>--session</code>, muestra recargos por herramientas de servidor de las superficies (búsqueda web / ejecución de código), advierte sobre modelos con uso pero sin una regla de precios correspondiente (preciados a 0 $, excluidos del total) y señala a <code>ccam pricing set</code>",
     "Alerts &amp; Webhooks": "Alertas y Webhooks",
     "The fired-alert feed with acknowledge / acknowledge-all, the rule list, and synthetic test deliveries against any webhook target":
       "El feed de alerta de disparo con reconocimiento / reconocimiento-todo, la lista de reglas y entregas de pruebas sintéticas contra cualquier objetivo webhook",
@@ -7794,4 +7794,65 @@ Object.assign(window.__WIKI_CONTENT_I18N.es, {
     "Directorio opcional de Cursor con <code>projects/agent-transcripts</code> y metadatos de <code>chats</code>. El historial local se completa y conserva sin instalar Hooks por separado.",
   "Cursor chat/transcript safety-net interval (ms). Filesystem watching still imports CLI startup and prompt changes immediately; <code>0</code> disables only periodic discovery.":
     "Intervalo de seguridad para chats/transcripciones de Cursor (ms). El observador incorpora de inmediato el inicio del CLI y los cambios de prompt; <code>0</code> solo desactiva el descubrimiento periódico.",
+});
+
+// Context Window + Atypical Sessions (Session Detail context timeline, Analytics diagnostic)
+Object.assign(window.__WIKI_CONTENT_I18N.zh, {
+  "The Session Detail overview charts the context sent with every assistant turn — input plus cache read and cache creation — with a numbered marker at each compaction. Below the curve, every compaction lists its size before and after, the share of context freed, its trigger (automatic or <code>/compact</code>), and how many messages the summary replaced. In the Conversation tab a compaction appears as a seam across the thread, and the injected summary is collapsed and attributed to the system.":
+    "会话详情概览会绘制每个助手回合发送的上下文大小——输入加上缓存读取与缓存创建——并在每次压缩处标出编号标记。曲线下方列出每次压缩的前后大小、释放的上下文占比、触发方式（自动或 <code>/compact</code>），以及摘要替换了多少条消息。在 Conversation 标签页中，压缩显示为横贯对话的分隔线，注入的摘要会被折叠并归属于系统。",
+  "Analytics compares every finished session of the last 7, 30, or 90 days on cost, tokens, duration, compactions, and tool calls. A metric's threshold is the higher of your own P90 and a fixed floor, so a light history never flags trivial outliers. Each flagged session gets one graded chip per exceeded metric and a notice on its own Session Detail overview. The same diagnostic is available as <code>ccam diagnostic</code> and the <code>dashboard_get_session_diagnostic</code> MCP tool.":
+    "Analytics 会在成本、Token、时长、压缩次数和工具调用上比较最近 7、30 或 90 天内每个已结束的会话。每项指标的阈值取你自己的 P90 与固定下限中的较大者，因此轻量的历史不会标记无关紧要的离群值。每个被标记的会话会为每项超出的指标显示一个分级标签，并在其概览页显示提示。同样的诊断也可通过 <code>ccam diagnostic</code> 和 <code>dashboard_get_session_diagnostic</code> MCP 工具获取。",
+  "Atypical sessions vs the period's P90 or a fixed floor — param: <code>days</code> (default 30)":
+    "相对该时段 P90 或固定下限的异常会话——参数：<code>days</code>（默认 30）",
+  "Context size per assistant turn plus one row per compaction (Claude)":
+    "每个助手回合的上下文大小，外加每次压缩一行（Claude）",
+});
+Object.assign(window.__WIKI_CONTENT_I18N.plain.zh, {
+  "Context Window": "上下文窗口",
+  "Atypical Sessions": "异常会话",
+});
+
+Object.assign(window.__WIKI_CONTENT_I18N.vi, {
+  "The Session Detail overview charts the context sent with every assistant turn — input plus cache read and cache creation — with a numbered marker at each compaction. Below the curve, every compaction lists its size before and after, the share of context freed, its trigger (automatic or <code>/compact</code>), and how many messages the summary replaced. In the Conversation tab a compaction appears as a seam across the thread, and the injected summary is collapsed and attributed to the system.":
+    "Phần tổng quan của Session Detail vẽ biểu đồ ngữ cảnh gửi đi ở mỗi lượt của trợ lý — input cộng cache read và cache creation — với một mốc đánh số tại mỗi lần nén. Bên dưới đường cong, mỗi lần nén liệt kê kích thước trước và sau, tỷ lệ ngữ cảnh được giải phóng, nguồn kích hoạt (tự động hoặc <code>/compact</code>) và số tin nhắn mà bản tóm tắt đã thay thế. Trong tab Conversation, một lần nén hiện thành đường phân cách ngang qua luồng hội thoại, còn bản tóm tắt được chèn vào sẽ được thu gọn và gán cho hệ thống.",
+  "Analytics compares every finished session of the last 7, 30, or 90 days on cost, tokens, duration, compactions, and tool calls. A metric's threshold is the higher of your own P90 and a fixed floor, so a light history never flags trivial outliers. Each flagged session gets one graded chip per exceeded metric and a notice on its own Session Detail overview. The same diagnostic is available as <code>ccam diagnostic</code> and the <code>dashboard_get_session_diagnostic</code> MCP tool.":
+    "Analytics so sánh mọi phiên đã kết thúc trong 7, 30 hoặc 90 ngày gần nhất theo chi phí, token, thời lượng, số lần nén và số lần gọi công cụ. Ngưỡng của mỗi chỉ số là giá trị lớn hơn giữa P90 của chính bạn và một mức sàn cố định, nên một lịch sử nhẹ không bao giờ đánh dấu các giá trị ngoại lai vụn vặt. Mỗi phiên bị đánh dấu có một chip phân cấp cho từng chỉ số vượt ngưỡng và một thông báo trên trang tổng quan của chính nó. Chẩn đoán này cũng có qua <code>ccam diagnostic</code> và công cụ MCP <code>dashboard_get_session_diagnostic</code>.",
+  "Atypical sessions vs the period's P90 or a fixed floor — param: <code>days</code> (default 30)":
+    "Các phiên bất thường so với P90 của khoảng thời gian hoặc một mức sàn cố định — tham số: <code>days</code> (mặc định 30)",
+  "Context size per assistant turn plus one row per compaction (Claude)":
+    "Kích thước ngữ cảnh theo từng lượt của trợ lý cùng một dòng cho mỗi lần nén (Claude)",
+});
+Object.assign(window.__WIKI_CONTENT_I18N.plain.vi, {
+  "Context Window": "Cửa sổ ngữ cảnh",
+  "Atypical Sessions": "Phiên bất thường",
+});
+
+Object.assign(window.__WIKI_CONTENT_I18N.ko, {
+  "The Session Detail overview charts the context sent with every assistant turn — input plus cache read and cache creation — with a numbered marker at each compaction. Below the curve, every compaction lists its size before and after, the share of context freed, its trigger (automatic or <code>/compact</code>), and how many messages the summary replaced. In the Conversation tab a compaction appears as a seam across the thread, and the injected summary is collapsed and attributed to the system.":
+    "Session Detail 개요는 어시스턴트 턴마다 전송된 컨텍스트 크기(입력 + 캐시 읽기 + 캐시 생성)를 차트로 보여 주며, 각 압축 지점에 번호 마커를 표시합니다. 곡선 아래에는 압축마다 전후 크기, 확보된 컨텍스트 비율, 트리거(자동 또는 <code>/compact</code>), 요약이 대체한 메시지 수가 나열됩니다. Conversation 탭에서는 압축이 대화를 가로지르는 구분선으로 표시되고, 주입된 요약은 접힌 상태로 시스템에 귀속됩니다.",
+  "Analytics compares every finished session of the last 7, 30, or 90 days on cost, tokens, duration, compactions, and tool calls. A metric's threshold is the higher of your own P90 and a fixed floor, so a light history never flags trivial outliers. Each flagged session gets one graded chip per exceeded metric and a notice on its own Session Detail overview. The same diagnostic is available as <code>ccam diagnostic</code> and the <code>dashboard_get_session_diagnostic</code> MCP tool.":
+    "Analytics는 최근 7일, 30일 또는 90일 동안 종료된 모든 세션을 비용, 토큰, 소요 시간, 압축 횟수, 도구 호출 수로 비교합니다. 각 지표의 임계값은 사용자 자신의 P90과 고정 하한 중 더 큰 값이므로, 가벼운 이력에서 사소한 이상값이 표시되는 일은 없습니다. 표시된 세션마다 초과한 지표별로 등급이 매겨진 칩이 하나씩 붙고, 해당 세션 개요에도 알림이 표시됩니다. 같은 진단은 <code>ccam diagnostic</code>과 <code>dashboard_get_session_diagnostic</code> MCP 도구로도 제공됩니다.",
+  "Atypical sessions vs the period's P90 or a fixed floor — param: <code>days</code> (default 30)":
+    "해당 기간의 P90 또는 고정 하한 대비 이상 세션 — 파라미터: <code>days</code> (기본값 30)",
+  "Context size per assistant turn plus one row per compaction (Claude)":
+    "어시스턴트 턴별 컨텍스트 크기와 압축마다 한 행 (Claude)",
+});
+Object.assign(window.__WIKI_CONTENT_I18N.plain.ko, {
+  "Context Window": "컨텍스트 윈도",
+  "Atypical Sessions": "이상 세션",
+});
+
+Object.assign(window.__WIKI_CONTENT_I18N.es, {
+  "The Session Detail overview charts the context sent with every assistant turn — input plus cache read and cache creation — with a numbered marker at each compaction. Below the curve, every compaction lists its size before and after, the share of context freed, its trigger (automatic or <code>/compact</code>), and how many messages the summary replaced. In the Conversation tab a compaction appears as a seam across the thread, and the injected summary is collapsed and attributed to the system.":
+    "La vista general de Session Detail grafica el contexto enviado en cada turno del asistente — entrada más lectura y creación de caché — con un marcador numerado en cada compactación. Bajo la curva, cada compactación muestra su tamaño antes y después, la proporción de contexto liberada, su origen (automático o <code>/compact</code>) y cuántos mensajes reemplazó el resumen. En la pestaña Conversation, una compactación aparece como una costura a lo largo del hilo, y el resumen inyectado se pliega y se atribuye al sistema.",
+  "Analytics compares every finished session of the last 7, 30, or 90 days on cost, tokens, duration, compactions, and tool calls. A metric's threshold is the higher of your own P90 and a fixed floor, so a light history never flags trivial outliers. Each flagged session gets one graded chip per exceeded metric and a notice on its own Session Detail overview. The same diagnostic is available as <code>ccam diagnostic</code> and the <code>dashboard_get_session_diagnostic</code> MCP tool.":
+    "Analytics compara cada sesión finalizada de los últimos 7, 30 o 90 días por costo, tokens, duración, compactaciones y llamadas a herramientas. El umbral de cada métrica es el mayor entre tu propio P90 y un mínimo fijo, de modo que un historial ligero nunca marca valores atípicos triviales. Cada sesión marcada recibe un chip graduado por métrica superada y un aviso en su propia vista general. El mismo diagnóstico está disponible como <code>ccam diagnostic</code> y como la herramienta MCP <code>dashboard_get_session_diagnostic</code>.",
+  "Atypical sessions vs the period's P90 or a fixed floor — param: <code>days</code> (default 30)":
+    "Sesiones atípicas frente al P90 del período o un mínimo fijo — parámetro: <code>days</code> (por defecto 30)",
+  "Context size per assistant turn plus one row per compaction (Claude)":
+    "Tamaño del contexto por turno del asistente más una fila por compactación (Claude)",
+});
+Object.assign(window.__WIKI_CONTENT_I18N.plain.es, {
+  "Context Window": "Ventana de contexto",
+  "Atypical Sessions": "Sesiones atípicas",
 });
