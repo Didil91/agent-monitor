@@ -162,6 +162,18 @@ describe("readContextTimeline", () => {
     assert.equal(compactions[1].post_tokens, null);
   });
 
+  it("ignores synthetic assistant turns with no context", async () => {
+    const p = writeTranscript("/tmp/ctx-synthetic", "synthetic", [
+      assistant("msg_1", usage(100, 900)),
+      boundary("b1", 1000),
+      assistant("msg_2", usage(0)),
+      assistant("msg_3", usage(50, 400)),
+    ]);
+    const { points, compactions } = await readContextTimeline(p);
+    assert.equal(points.length, 2);
+    assert.equal(compactions[0].post_tokens, 450);
+  });
+
   it("skips malformed lines", async () => {
     const p = writeTranscript("/tmp/ctx-bad", "bad", [
       assistant("msg_1", usage(5)),

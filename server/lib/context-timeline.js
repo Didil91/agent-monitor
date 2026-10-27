@@ -81,6 +81,8 @@ async function readContextTimeline(jsonlPath) {
     if (entry.type !== "assistant" || !message || !message.usage) continue;
 
     const contextTokens = contextTokensOf(message.usage);
+    // Harness-written synthetic turns (interruptions, errors) carry no usage.
+    if (contextTokens === 0) continue;
     points.push({
       turn: points.length + 1,
       timestamp: entry.timestamp || null,
