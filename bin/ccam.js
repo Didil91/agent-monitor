@@ -12,7 +12,7 @@
  * Server                status · start · repl (interactive shell)
  * Monitoring            health · stats · kanban · tail
  * Data browsing         sessions · session <id> · agents · events
- * Insights              analytics · workflows · runs · cost
+ * Insights              analytics · diagnostic · workflows · runs · cost
  * Alerting              alerts · alerts ack <id> · alerts ack-all · rules
  * Webhooks              webhooks · webhooks test <id>
  * Pricing               pricing · pricing set/delete/reset
@@ -939,6 +939,55 @@ async function cmdAnalytics() {
   if (a.avg_events_per_session != null) {
     console.log(`\nAvg events/session: ${c.cyan(Number(a.avg_events_per_session).toFixed(1))}`);
   }
+}
+
+const DIAGNOSTIC_METRIC_LABELS = {
+  cost: "Cost",
+  tokens: "Tokens",
+  duration_min: "Duration (min)",
+  compactions: "Compactions",
+  tool_calls: "Tool calls",
+};
+
+function fmtDiagnosticValue(metric, value) {
+  if (value == null) return "-";
+  if (metric === "cost") return `$${Number(value).toFixed(2)}`;
+  if (metric === "tokens") return fmtTokens(value);
+  return String(Math.round(Number(value) * 10) / 10);
+}
+
+async function cmdDiagnostic(flags) {
+  const days = flags.days ? `?days=${encodeURIComponent(flags.days)}` : "";
+  const d = await get(`/api/analytics/diagnostic${days}`);
+  heading("Session diagnostic", `${d.period_days} days · ${d.sample_size} sessions`);
+  table(
+    ["Metric", "P90", "Guardrail", "Threshold"],
+    Object.entries(d.thresholds || {}).map(([metric, t]) => [
+      DIAGNOSTIC_METRIC_LABELS[metric] || metric,
+      fmtDiagnosticValue(metric, t.p90),
+      fmtDiagnosticValue(metric, t.guardrail),
+      c.bold(fmtDiagnosticValue(metric, t.threshold)),
+    ])
+  );
+  const sessions = d.sessions || [];
+  console.log(`\n${c.bold("Atypical sessions")} ${c.dim(`(${sessions.length})`)}`);
+  if (sessions.length === 0) {
+    console.log(c.dim("  None above threshold."));
+  } else {
+    table(
+      ["Session", "Started", "Above threshold"],
+      sessions
+        .slice(0, 20)
+        .map((s) => [
+          String(s.name || s.id).slice(0, 40),
+          String(s.started_at || "").slice(0, 10),
+          s.flags
+            .map((f) => `${DIAGNOSTIC_METRIC_LABELS[f.metric] || f.metric} ×${f.ratio}`)
+            .join(", "),
+        ])
+    );
+  }
+  if (d.limits?.length) console.log(c.dim(`\nNot measured: ${d.limits.join(", ")}`));
 }
 
 async function cmdWorkflows(flags) {
@@ -2175,6 +2224,7 @@ const COMMAND_GROUPS = [
     "Insights",
     [
       ["analytics", "", "Token totals, top-tool and agent-type charts"],
+      ["diagnostic", "[--days n]", "Atypical sessions vs your own P90 (cost, tokens, duration…)"],
       ["workflows", "[--session id]", "Workflow intelligence stats and patterns"],
       ["runs", "[--session id]", "Dynamic Workflow-tool runs"],
       ["run", "list|history|start|send|stop|…", "Inspect and control dashboard-launched agents"],
@@ -2504,6 +2554,7 @@ const OFFLINE_HANDLERS = {
 const SERVER_ONLY_REASONS = {
   tail: "live capture needs the running server (hooks only post to a live server)",
   analytics: "analytics aggregation runs server-side",
+  diagnostic: "the session diagnostic (P90 thresholds, cost math) runs server-side",
   workflows: "workflow intelligence is computed server-side",
   runs: "workflow-run reconstruction runs server-side",
   cost: "cost math (pricing rules, compaction baselines) runs server-side",
@@ -2998,6 +3049,8 @@ async function runCommand(argv) {
       return cmdTranscriptImage(flags, positional);
     case "analytics":
       return cmdAnalytics();
+    case "diagnostic":
+      return cmdDiagnostic(flags);
     case "workflows":
       return cmdWorkflows(flags);
     case "runs":

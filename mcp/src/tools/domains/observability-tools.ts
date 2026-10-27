@@ -121,6 +121,30 @@ export function registerObservabilityTools(context: ToolContext): void {
       })
   );
 
+  // Calls GET /api/analytics/diagnostic. Output: per-metric thresholds
+  // (max of the period's P90 and a fixed guardrail), the sessions above them
+  // with value/threshold/ratio per metric, and codes for unmeasured signals.
+  register(
+    "dashboard_get_session_diagnostic",
+    "List atypical sessions: finished sessions whose cost, tokens, duration, compactions or tool calls exceed max(P90 of the period, a fixed guardrail).",
+    {
+      days: z.number().int().min(1).max(365).optional(),
+      sources: z.array(z.string().min(1).max(256)).max(100).optional(),
+      providers: z
+        .array(z.enum(["claude", "codex"]))
+        .max(2)
+        .optional(),
+    },
+    async (args) =>
+      api.get("/api/analytics/diagnostic", {
+        query: {
+          days: args.days as number | undefined,
+          sources: (args.sources as string[] | undefined)?.join(","),
+          providers: (args.providers as string[] | undefined)?.join(","),
+        },
+      })
+  );
+
   // Calls GET /api/settings/info. Output: SQLite path/size/counts/pragmas,
   // recent ingestion load (5/15/60 min), Claude Code hook install status,
   // and Node/OS process info (uptime, memory, cpu, ws connections).

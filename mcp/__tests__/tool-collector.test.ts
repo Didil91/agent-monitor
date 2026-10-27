@@ -93,6 +93,7 @@ describe("collectAllTools", () => {
     assert.ok(names.has("dashboard_health_check"));
     assert.ok(names.has("dashboard_get_stats"));
     assert.ok(names.has("dashboard_get_analytics"));
+    assert.ok(names.has("dashboard_get_session_diagnostic"));
     assert.ok(names.has("dashboard_get_system_info"));
     assert.ok(names.has("dashboard_export_data"));
     assert.ok(names.has("dashboard_get_operational_snapshot"));

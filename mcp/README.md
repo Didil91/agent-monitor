@@ -50,6 +50,7 @@ An HTTP session is tracked under the `mcp-session-id` returned by `initialize` (
 - `dashboard_health_check`
 - `dashboard_get_stats`
 - `dashboard_get_analytics`
+- `dashboard_get_session_diagnostic`
 - `dashboard_get_system_info`
 - `dashboard_export_data`
 - `dashboard_get_operational_snapshot`

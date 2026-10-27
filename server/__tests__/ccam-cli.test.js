@@ -211,6 +211,14 @@ describe("ccam CLI — insights", () => {
     assert.match(out, /Input/);
   });
 
+  it("diagnostic prints thresholds and the period", async () => {
+    const { code, out } = await ccam("diagnostic", "--days", "7");
+    assert.equal(code, 0);
+    assert.match(out, /Session diagnostic/);
+    assert.match(out, /7 days/);
+    assert.match(out, /Threshold/);
+  });
+
   it("workflows prints intelligence stats", async () => {
     const { code, out } = await ccam("workflows");
     assert.equal(code, 0);
@@ -757,7 +765,7 @@ describe("ccam CLI — offline mode (server down, DB read directly)", () => {
   });
 
   it("analytics/workflows/tail refuse offline with reasons", async () => {
-    for (const cmd of ["analytics", "workflows", "tail"]) {
+    for (const cmd of ["analytics", "diagnostic", "workflows", "tail"]) {
       const { code, err } = await offline(cmd);
       assert.equal(code, 1, `${cmd} should refuse offline`);
       assert.match(err, /No offline fallback/);
@@ -781,6 +789,7 @@ describe("ccam CLI — help & errors", () => {
       "agents",
       "events",
       "analytics",
+      "diagnostic",
       "workflows",
       "runs",
       "cost",
