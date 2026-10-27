@@ -208,7 +208,7 @@ function classifyTranscriptSender(entry, isSubagentFile) {
   const lead = text.replace(/^\s+/, "");
 
   // Harness injections that masquerade as a user line.
-  if (entry.isMeta === true) return "system";
+  if (entry.isMeta === true || entry.isCompactSummary === true) return "system";
   if (lead.startsWith("<task-notification>") || lead.startsWith("<task-notification ")) {
     return "system";
   }
@@ -1525,6 +1525,23 @@ router.get("/:id/transcript", async (req, res) => {
       // (e.g. /color → "/color" pill + "Session color set to: cyan"). Skip
       // every other system subtype (turn_duration, stop_hook_summary, …) and
       // empty local_command lines (e.g. /clear writes a content-less one).
+      // Context compaction boundary (auto or /compact). Surfaced as a marker
+      // carrying only what this line holds: the transcript is paginated, so
+      // post-compaction size lives in the context-timeline route instead.
+      if (entry.type === "system" && entry.subtype === "compact_boundary") {
+        const meta = entry.compactMetadata || {};
+        return {
+          type: "session_event",
+          event_kind: "compaction",
+          trigger: typeof meta.trigger === "string" ? meta.trigger : null,
+          pre_tokens: Number.isFinite(meta.preTokens) ? meta.preTokens : null,
+          duration_ms: Number.isFinite(meta.durationMs) ? meta.durationMs : null,
+          timestamp: entry.timestamp || null,
+          content: [],
+          line: num,
+        };
+      }
+
       if (entry.type === "system") {
         if (entry.subtype !== "local_command") return null;
         const sysText = typeof entry.content === "string" ? entry.content : "";
@@ -1646,6 +1663,7 @@ router.get("/:id/transcript", async (req, res) => {
         content,
         line: num,
       };
+      if (entry.isCompactSummary === true) message.compact_summary = true;
 
       if (entry.type === "assistant") {
         if (msg.model) message.model = msg.model;

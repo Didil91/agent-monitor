@@ -2585,7 +2585,7 @@ export type TranscriptSender = "user" | "assistant" | "orchestrator" | "system" 
  * conversation viewer in SessionDetail.
  *
  * The synthetic `type: "session_event"` line is not a real transcript entry -
- * the server injects it to mark in-band TUI actions (currently only `/rename`),
+ * the server injects it to mark in-band TUI actions (`/rename` and context compactions),
  * carrying its detail in `event_kind`/`title` rather than `content`.
  */
 export interface TranscriptMessage {
@@ -2620,10 +2620,19 @@ export interface TranscriptMessage {
     cache_creation_input_tokens?: number;
   };
   /** For type === "session_event": the TUI action this marker represents.
-   *  "rename" is a /rename, `claude -n`, or picker Ctrl+R title change. */
-  event_kind?: "rename";
+   *  "rename" is a /rename, `claude -n`, or picker Ctrl+R title change.
+   *  "compaction" is a context compaction boundary (auto or /compact). */
+  event_kind?: "rename" | "compaction";
   /** For type === "session_event": the new session title. */
   title?: string;
+  /** For a compaction marker: what fired it ("auto" or "manual"), or null. */
+  trigger?: string | null;
+  /** For a compaction marker: context size in tokens just before compaction. */
+  pre_tokens?: number | null;
+  /** For a compaction marker: how long the compaction took, in milliseconds. */
+  duration_ms?: number | null;
+  /** True on the summary message that replaced the compacted history. */
+  compact_summary?: boolean;
 }
 
 /** Response shape of GET /api/sessions/:id/transcript - one page of parsed
