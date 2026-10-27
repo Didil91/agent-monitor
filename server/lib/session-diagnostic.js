@@ -100,13 +100,13 @@ function limitsFor(sessionMetrics, minSample) {
 function collectSessionMetrics(db, { days, sources = null, providers = null }) {
   const sessions = selectFinishedSessions(db, { days, sources, providers });
   if (sessions.length === 0) return [];
-  const compactionsBySession = countBySession(
-    db,
-    "SELECT session_id, COUNT(*) AS n FROM agents WHERE subagent_type = 'compaction' GROUP BY session_id"
+  // Per-session counts ride the (session_id, …) indexes; a GROUP BY over the
+  // whole history grew with every past event and blocked the event loop.
+  const compactionsStatement = db.prepare(
+    "SELECT COUNT(*) AS n FROM agents WHERE session_id = ? AND subagent_type = 'compaction'"
   );
-  const toolCallsBySession = countBySession(
-    db,
-    "SELECT session_id, COUNT(*) AS n FROM events WHERE event_type = 'PreToolUse' GROUP BY session_id"
+  const toolCallsStatement = db.prepare(
+    "SELECT COUNT(*) AS n FROM events WHERE session_id = ? AND event_type = 'PreToolUse'"
   );
   const pricing = {
     claude: db.prepare("SELECT * FROM model_pricing").all(),
@@ -143,8 +143,8 @@ function collectSessionMetrics(db, { days, sources = null, providers = null }) {
         cost,
         tokens,
         duration_min: durationMinutes(session.started_at, session.ended_at),
-        compactions: compactionsBySession.get(session.id) ?? 0,
-        tool_calls: toolCallsBySession.get(session.id) ?? 0,
+        compactions: compactionsStatement.get(session.id).n,
+        tool_calls: toolCallsStatement.get(session.id).n,
       };
     })
     .filter((row) => row.tokens > 0 || row.tool_calls > 0);
@@ -179,15 +179,6 @@ function selectFinishedSessions(db, { days, sources, providers }) {
        FROM sessions WHERE ${clauses.join(" AND ")}`
     )
     .all(...params);
-}
-
-function countBySession(db, sql) {
-  return new Map(
-    db
-      .prepare(sql)
-      .all()
-      .map((row) => [row.session_id, row.n])
-  );
 }
 
 function durationMinutes(startedAt, endedAt) {

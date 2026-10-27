@@ -144,6 +144,19 @@ describe("collectSessionMetrics", () => {
     assert.ok(done.cost > 0);
   });
 
+  it("counts only the selected sessions' rows, not the whole history", () => {
+    const queries = [];
+    const spyDb = {
+      prepare(sql) {
+        queries.push(sql);
+        return db.prepare(sql);
+      },
+    };
+    collectSessionMetrics(spyDb, { days: 30 });
+    const fullScans = queries.filter((sql) => /GROUP BY session_id/i.test(sql));
+    assert.deepEqual(fullScans, [], "no GROUP BY over the whole events/agents tables");
+  });
+
   it("excludes active sessions and sessions outside the period", () => {
     const ids = collectSessionMetrics(db, { days: 30 }).map((r) => r.id);
     assert.ok(!ids.includes("live-1"));
