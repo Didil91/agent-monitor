@@ -244,7 +244,16 @@ vi.mock("../../lib/api", async (importOriginal) => {
         list: r({ events: [], total: 0, limit: 50, offset: 0 }),
         facets: r({ event_types: [], tool_names: [] }),
       },
-      analytics: { get: r(analytics) },
+      analytics: {
+        get: r(analytics),
+        diagnostic: r({
+          period_days: 30,
+          sample_size: 0,
+          thresholds: {},
+          sessions: [],
+          limits: [],
+        }),
+      },
       workflows: {
         get: r(emptyWorkflow),
         session: r({}),

@@ -16,7 +16,8 @@
     "tokenAnalytics": "Analyse des tokens",
     "costAnalytics": "Analyse des coûts",
     "workflowIntelligence": "Intelligence des workflows",
-    "productivityAnalytics": "Analyse de productivité"
+    "productivityAnalytics": "Analyse de productivité",
+    "sessionDiagnostic": "Sessions atypiques"
   },
   "eventActivity": "Activité des événements - 52 dernières semaines",
   "last30Days": "30 derniers jours",
@@ -50,5 +51,41 @@
   "noSessionTrendData": "Aucune donnée d'évolution des sessions pour le moment.",
   "last7Days": "7 derniers jours",
   "less": "Moins",
-  "more": "Plus"
+  "more": "Plus",
+  "diagnostic": {
+    "summary_one": "{{count}} session au-dessus de vos habitudes sur {{days}} jours",
+    "summary_other": "{{count}} sessions au-dessus de vos habitudes sur {{days}} jours",
+    "sample_one": "{{count}} session analysée",
+    "sample_other": "{{count}} sessions analysées",
+    "period": "Période",
+    "days": "{{count}} jours",
+    "thresholdHint": "Une session ressort quand elle dépasse le plus haut entre votre P90 et un plancher fixe.",
+    "p90": "votre P90 {{value}}",
+    "noP90": "pas encore de P90",
+    "floor": "plancher {{value}}",
+    "metric": {
+      "cost": "Coût",
+      "tokens": "Tokens",
+      "duration_min": "Durée",
+      "compactions": "Compactions",
+      "tool_calls": "Appels d'outils"
+    },
+    "estimated": "estimé",
+    "colSession": "Session",
+    "colStarted": "Début",
+    "colAbove": "Au-dessus du seuil",
+    "empty": "Aucune session ne ressort sur cette période.",
+    "limitsTitle": "Non mesuré",
+    "limit": {
+      "tool_errors_not_captured": "Les erreurs d'outils ne sont pas enregistrées par les hooks.",
+      "active_sessions_excluded": "Les sessions en cours sont exclues.",
+      "cost_estimated": "Le coût est une estimation tirée de la table de prix.",
+      "small_sample": "Moins de 10 sessions : seuls les planchers fixes s'appliquent.",
+      "cursor_cost_unreliable": "Les coûts Cursor sont approximatifs."
+    },
+    "loadError": "Impossible de calculer le diagnostic. Vérifiez que le serveur tourne, puis rechargez.",
+    "sessionBoxTitle": "Cette session ressort",
+    "sessionBoxBody": "Comparée à vos sessions des {{days}} derniers jours :",
+    "versus": "{{value}} pour {{threshold}}"
+  }
 }

@@ -147,6 +147,7 @@ import {
   FolderOpen,
   FolderTree,
   Github,
+  AlertTriangle,
   Globe,
   Monitor,
   Moon,
@@ -502,6 +503,13 @@ const VIEW_COMMANDS: {
     labelKey: "analytics:tabs.workflowIntelligence",
     ownerKey: "nav:analytics",
     icon: Workflow,
+  },
+  {
+    id: "view:analytics:diagnostic",
+    to: "/analytics?tab=diagnostic",
+    labelKey: "analytics:tabs.sessionDiagnostic",
+    ownerKey: "nav:analytics",
+    icon: AlertTriangle,
   },
 ];
 

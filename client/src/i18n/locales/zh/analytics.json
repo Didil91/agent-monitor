@@ -16,7 +16,8 @@
     "tokenAnalytics": "Token 分析",
     "costAnalytics": "费用分析",
     "workflowIntelligence": "工作流智能",
-    "productivityAnalytics": "生产力分析"
+    "productivityAnalytics": "生产力分析",
+    "sessionDiagnostic": "异常会话"
   },
   "eventActivity": "事件活动 - 过去 52 周",
   "last30Days": "过去 30 天",
@@ -50,5 +51,41 @@
   "noSessionTrendData": "暂无会话趋势数据。",
   "last7Days": "过去 7 天",
   "less": "少",
-  "more": "多"
+  "more": "多",
+  "diagnostic": {
+    "summary_one": "{{days}} 天内有 {{count}} 个会话超出你的常规范围",
+    "summary_other": "{{days}} 天内有 {{count}} 个会话超出你的常规范围",
+    "sample_one": "已分析 {{count}} 个会话",
+    "sample_other": "已分析 {{count}} 个会话",
+    "period": "时间段",
+    "days": "{{count}} 天",
+    "thresholdHint": "当会话超过你的 P90 与固定下限中较高者时即视为异常。",
+    "p90": "你的 P90 {{value}}",
+    "noP90": "暂无 P90",
+    "floor": "下限 {{value}}",
+    "metric": {
+      "cost": "费用",
+      "tokens": "Token",
+      "duration_min": "时长",
+      "compactions": "压缩",
+      "tool_calls": "工具调用"
+    },
+    "estimated": "估算",
+    "colSession": "会话",
+    "colStarted": "开始",
+    "colAbove": "超出阈值",
+    "empty": "此时间段内没有突出的会话。",
+    "limitsTitle": "未测量",
+    "limit": {
+      "tool_errors_not_captured": "Hooks 不会记录工具错误。",
+      "active_sessions_excluded": "仍在运行的会话已排除。",
+      "cost_estimated": "费用是根据价格表得出的估算值。",
+      "small_sample": "会话少于 10 个：仅应用固定下限。",
+      "cursor_cost_unreliable": "Cursor 费用为近似值。"
+    },
+    "loadError": "无法计算诊断。请确认服务器正在运行，然后重新加载。",
+    "sessionBoxTitle": "此会话较为突出",
+    "sessionBoxBody": "与你最近 {{days}} 天的会话相比：",
+    "versus": "{{value}}，阈值 {{threshold}}"
+  }
 }

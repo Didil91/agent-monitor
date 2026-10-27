@@ -2765,3 +2765,39 @@ export interface ContextTimeline {
   points: ContextTimelinePoint[];
   compactions: ContextCompaction[];
 }
+
+/** A metric the session diagnostic compares against the user's own habits. */
+export type DiagnosticMetric = "cost" | "tokens" | "duration_min" | "compactions" | "tool_calls";
+
+/** One metric of one session above its threshold. */
+export interface DiagnosticFlag {
+  metric: DiagnosticMetric;
+  value: number;
+  threshold: number;
+  /** value / threshold, rounded to two decimals. */
+  ratio: number;
+  /** "estimated" for cost (depends on the price table), else "measured". */
+  kind: "measured" | "estimated";
+}
+
+/** Response shape of GET /api/analytics/diagnostic. */
+export interface SessionDiagnostic {
+  period_days: number;
+  /** Finished, non-empty sessions analyzed over the period. */
+  sample_size: number;
+  /** Per metric: the period's P90 (null under 10 sessions), the fixed floor, and their max. */
+  thresholds: Record<
+    DiagnosticMetric,
+    { p90: number | null; guardrail: number; threshold: number }
+  >;
+  /** Sessions with at least one metric above threshold, most extreme first. */
+  sessions: Array<{
+    id: string;
+    name: string | null;
+    started_at: string;
+    provider: string;
+    flags: DiagnosticFlag[];
+  }>;
+  /** Codes for what the diagnostic cannot measure (translated in the UI). */
+  limits: string[];
+}

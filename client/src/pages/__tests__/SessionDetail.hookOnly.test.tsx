@@ -33,6 +33,17 @@ const agent: Agent = {
 
 vi.mock("../../lib/api", () => ({
   api: {
+    analytics: {
+      diagnostic: vi.fn(() =>
+        Promise.resolve({
+          period_days: 90,
+          sample_size: 0,
+          thresholds: {},
+          sessions: [],
+          limits: [],
+        })
+      ),
+    },
     sessions: {
       get: vi.fn(() =>
         Promise.resolve({ session: mockSession, agents: [agent], events: [] as DashboardEvent[] })

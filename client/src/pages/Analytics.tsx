@@ -78,6 +78,7 @@ import { useDataScope } from "../lib/dataScope";
 import { fmt, fmtCost, fmtCostFull, formatModelName, getCurrentLocale } from "../lib/format";
 import { Tip } from "../components/Tip";
 import { PaginatedLegend } from "../components/PaginatedLegend";
+import { DiagnosticPanel } from "../components/DiagnosticPanel";
 import { Skeleton, StatValueSkeleton, TextSkeleton } from "../components/Skeleton";
 import { useUrlTab } from "../hooks/usePageShortcuts";
 import { usePaletteAction } from "../components/PaletteActionProvider";
@@ -672,7 +673,7 @@ function AnalyticsChartsSkeleton() {
 }
 
 /** Tab keys in render order — also the order `1`…`4` and `[`/`]` address them. */
-const ANALYTICS_TABS = ["cost", "tokens", "productivity", "workflow"] as const;
+const ANALYTICS_TABS = ["cost", "tokens", "productivity", "workflow", "diagnostic"] as const;
 
 /** Label key per tab, kept beside the order so the two cannot drift. */
 const ANALYTICS_TAB_LABEL_KEYS: Record<(typeof ANALYTICS_TABS)[number], string> = {
@@ -680,6 +681,7 @@ const ANALYTICS_TAB_LABEL_KEYS: Record<(typeof ANALYTICS_TABS)[number], string> 
   tokens: "tabs.tokenAnalytics",
   productivity: "tabs.productivityAnalytics",
   workflow: "tabs.workflowIntelligence",
+  diagnostic: "tabs.sessionDiagnostic",
 };
 
 // ── Main page ─────────────────────────────────────────────────────────────────
@@ -1388,6 +1390,8 @@ export function Analytics() {
                 </div>
               </div>
             )}
+
+            {activeTab === "diagnostic" && <DiagnosticPanel />}
 
             {activeTab === "productivity" && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

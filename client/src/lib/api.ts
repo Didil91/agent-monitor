@@ -398,6 +398,7 @@ import type {
   SessionDrillIn,
   SessionStats,
   ContextTimeline,
+  SessionDiagnostic,
   Stats,
   TranscriptListResult,
   TranscriptResult,
@@ -920,6 +921,13 @@ export const api = {
       const qs = new URLSearchParams({ tz_offset: String(new Date().getTimezoneOffset()) });
       applyScope(qs);
       return request<Analytics>(`/analytics?${qs.toString()}`);
+    },
+    /** GET /api/analytics/diagnostic - finished sessions above the user's own
+     *  P90 (or a fixed floor) on cost, tokens, duration, compactions, tool calls. */
+    diagnostic: (days: number) => {
+      const qs = new URLSearchParams({ days: String(days) });
+      applyScope(qs);
+      return request<SessionDiagnostic>(`/analytics/diagnostic?${qs.toString()}`);
     },
   },
 

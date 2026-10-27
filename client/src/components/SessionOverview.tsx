@@ -78,7 +78,12 @@ import { fmt, formatDuration } from "../lib/format";
 import { styleForTool } from "./conversation/toolStyle";
 import { ContextTimelineChart } from "./ContextTimelineChart";
 import { useContextTimeline } from "../hooks/useContextTimeline";
+import { useSessionDiagnostic } from "../hooks/useSessionDiagnostic";
+import { SessionDiagnosticNotice } from "./DiagnosticTable";
 import type { Agent, Session, SessionStats } from "../lib/types";
+
+/** Window the overview compares a finished session against. */
+const SESSION_DIAGNOSTIC_DAYS = 90;
 
 interface SessionOverviewProps {
   session: Session;
@@ -170,6 +175,8 @@ export function SessionOverview({ session, agents }: SessionOverviewProps) {
   const [stats, setStats] = useState<SessionStats | null>(null);
   const isClaudeSession = (session.provider ?? "claude") === "claude";
   const contextTimeline = useContextTimeline(session.id, isClaudeSession, stats?.total_events ?? 0);
+  const { diagnostic } = useSessionDiagnostic(SESSION_DIAGNOSTIC_DAYS, session.status !== "active");
+  const diagnosticFlags = diagnostic?.sessions.find((flagged) => flagged.id === session.id)?.flags;
   const refreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const fetchingRef = useRef(false);
 
@@ -360,6 +367,10 @@ export function SessionOverview({ session, agents }: SessionOverviewProps) {
           tone={session.status === "active" ? "emerald" : "default"}
         />
       </div>
+
+      {diagnosticFlags && (
+        <SessionDiagnosticNotice flags={diagnosticFlags} days={SESSION_DIAGNOSTIC_DAYS} />
+      )}
 
       {contextTimeline && <ContextTimelineChart timeline={contextTimeline} />}
 

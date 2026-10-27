@@ -16,7 +16,8 @@
     "tokenAnalytics": "토큰 분석",
     "costAnalytics": "비용 분석",
     "workflowIntelligence": "워크플로 인텔리전스",
-    "productivityAnalytics": "생산성 분석"
+    "productivityAnalytics": "생산성 분석",
+    "sessionDiagnostic": "이례적인 세션"
   },
   "eventActivity": "이벤트 활동 - 최근 52주",
   "last30Days": "최근 30일",
@@ -50,5 +51,41 @@
   "noSessionTrendData": "아직 세션 추이 데이터가 없습니다.",
   "last7Days": "최근 7일",
   "less": "적음",
-  "more": "많음"
+  "more": "많음",
+  "diagnostic": {
+    "summary_one": "최근 {{days}}일 동안 평소 범위를 넘은 세션 {{count}}개",
+    "summary_other": "최근 {{days}}일 동안 평소 범위를 넘은 세션 {{count}}개",
+    "sample_one": "세션 {{count}}개 분석",
+    "sample_other": "세션 {{count}}개 분석",
+    "period": "기간",
+    "days": "{{count}}일",
+    "thresholdHint": "세션이 내 P90과 고정 하한 중 더 큰 값을 넘으면 이례적인 것으로 표시됩니다.",
+    "p90": "내 P90 {{value}}",
+    "noP90": "아직 P90 없음",
+    "floor": "하한 {{value}}",
+    "metric": {
+      "cost": "비용",
+      "tokens": "토큰",
+      "duration_min": "기간",
+      "compactions": "압축",
+      "tool_calls": "도구 호출"
+    },
+    "estimated": "추정",
+    "colSession": "세션",
+    "colStarted": "시작",
+    "colAbove": "임계값 초과",
+    "empty": "이 기간에 눈에 띄는 세션이 없습니다.",
+    "limitsTitle": "측정되지 않음",
+    "limit": {
+      "tool_errors_not_captured": "도구 오류는 훅이 기록하지 않습니다.",
+      "active_sessions_excluded": "실행 중인 세션은 제외됩니다.",
+      "cost_estimated": "비용은 가격표를 기준으로 한 추정치입니다.",
+      "small_sample": "세션이 10개 미만이면 고정 하한만 적용됩니다.",
+      "cursor_cost_unreliable": "Cursor 비용은 근사치입니다."
+    },
+    "loadError": "진단을 계산하지 못했습니다. 서버가 실행 중인지 확인한 뒤 새로고침하세요.",
+    "sessionBoxTitle": "이 세션은 이례적입니다",
+    "sessionBoxBody": "최근 {{days}}일 동안의 세션과 비교:",
+    "versus": "{{value}} / 기준 {{threshold}}"
+  }
 }

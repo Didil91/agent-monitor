@@ -16,7 +16,8 @@
     "tokenAnalytics": "Analíticas de Tokens",
     "costAnalytics": "Analíticas de Costo",
     "workflowIntelligence": "Inteligencia de Flujos",
-    "productivityAnalytics": "Analíticas de Productividad"
+    "productivityAnalytics": "Analíticas de Productividad",
+    "sessionDiagnostic": "Sesiones atípicas"
   },
   "eventActivity": "Actividad de Eventos - Últimas 52 Semanas",
   "last30Days": "Últimos 30 Días",
@@ -50,5 +51,41 @@
   "noSessionTrendData": "Sin datos de tendencias de sesiones aún.",
   "last7Days": "Últimos 7 días",
   "less": "Menos",
-  "more": "Más"
+  "more": "Más",
+  "diagnostic": {
+    "summary_one": "{{count}} sesión por encima de lo habitual en {{days}} días",
+    "summary_other": "{{count}} sesiones por encima de lo habitual en {{days}} días",
+    "sample_one": "{{count}} sesión analizada",
+    "sample_other": "{{count}} sesiones analizadas",
+    "period": "Periodo",
+    "days": "{{count}} días",
+    "thresholdHint": "Una sesión destaca cuando supera el mayor valor entre tu P90 y un mínimo fijo.",
+    "p90": "tu P90 {{value}}",
+    "noP90": "aún sin P90",
+    "floor": "mínimo {{value}}",
+    "metric": {
+      "cost": "Coste",
+      "tokens": "Tokens",
+      "duration_min": "Duración",
+      "compactions": "Compactaciones",
+      "tool_calls": "Llamadas a herramientas"
+    },
+    "estimated": "estimado",
+    "colSession": "Sesión",
+    "colStarted": "Inicio",
+    "colAbove": "Por encima del umbral",
+    "empty": "Ninguna sesión destaca en este periodo.",
+    "limitsTitle": "No medido",
+    "limit": {
+      "tool_errors_not_captured": "Los hooks no registran los errores de herramientas.",
+      "active_sessions_excluded": "Las sesiones en curso quedan excluidas.",
+      "cost_estimated": "El coste es una estimación según la tabla de precios.",
+      "small_sample": "Menos de 10 sesiones: solo se aplican los mínimos fijos.",
+      "cursor_cost_unreliable": "Los costes de Cursor son aproximados."
+    },
+    "loadError": "No se pudo calcular el diagnóstico. Comprueba que el servidor esté en marcha y recarga.",
+    "sessionBoxTitle": "Esta sesión destaca",
+    "sessionBoxBody": "Comparada con tus sesiones de los últimos {{days}} días:",
+    "versus": "{{value}} frente a {{threshold}}"
+  }
 }

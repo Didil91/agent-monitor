@@ -16,7 +16,8 @@
     "tokenAnalytics": "Token Analytics",
     "costAnalytics": "Cost Analytics",
     "workflowIntelligence": "Workflow Intelligence",
-    "productivityAnalytics": "Productivity Analytics"
+    "productivityAnalytics": "Productivity Analytics",
+    "sessionDiagnostic": "Atypical Sessions"
   },
   "eventActivity": "Event Activity - Last 52 Weeks",
   "last30Days": "Last 30 Days",
@@ -50,5 +51,41 @@
   "noSessionTrendData": "No session trend data yet.",
   "last7Days": "Last 7 days",
   "less": "Less",
-  "more": "More"
+  "more": "More",
+  "diagnostic": {
+    "summary_one": "{{count}} session above your usual range over {{days}} days",
+    "summary_other": "{{count}} sessions above your usual range over {{days}} days",
+    "sample_one": "{{count}} session analyzed",
+    "sample_other": "{{count}} sessions analyzed",
+    "period": "Period",
+    "days": "{{count}} days",
+    "thresholdHint": "A session stands out when it goes past the higher of your P90 and a fixed floor.",
+    "p90": "your P90 {{value}}",
+    "noP90": "no P90 yet",
+    "floor": "floor {{value}}",
+    "metric": {
+      "cost": "Cost",
+      "tokens": "Tokens",
+      "duration_min": "Duration",
+      "compactions": "Compactions",
+      "tool_calls": "Tool calls"
+    },
+    "estimated": "estimated",
+    "colSession": "Session",
+    "colStarted": "Started",
+    "colAbove": "Above threshold",
+    "empty": "No session stands out over this period.",
+    "limitsTitle": "Not measured",
+    "limit": {
+      "tool_errors_not_captured": "Tool errors aren't recorded by the hooks.",
+      "active_sessions_excluded": "Sessions still running are left out.",
+      "cost_estimated": "Cost is an estimate from the price table.",
+      "small_sample": "Fewer than 10 sessions: only the fixed floors apply.",
+      "cursor_cost_unreliable": "Cursor costs are approximate."
+    },
+    "loadError": "Couldn't compute the diagnostic. Check that the server is running, then reload.",
+    "sessionBoxTitle": "This session stands out",
+    "sessionBoxBody": "Compared with your sessions of the last {{days}} days:",
+    "versus": "{{value}} vs {{threshold}}"
+  }
 }

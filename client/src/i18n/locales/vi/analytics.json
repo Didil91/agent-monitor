@@ -16,7 +16,8 @@
     "tokenAnalytics": "Phân tích token",
     "costAnalytics": "Phân tích chi phí",
     "workflowIntelligence": "Thông minh quy trình",
-    "productivityAnalytics": "Phân tích năng suất"
+    "productivityAnalytics": "Phân tích năng suất",
+    "sessionDiagnostic": "Phiên bất thường"
   },
   "eventActivity": "Hoạt động sự kiện - 52 tuần gần nhất",
   "last30Days": "30 ngày gần nhất",
@@ -50,5 +51,41 @@
   "noSessionTrendData": "Chưa có dữ liệu xu hướng phiên.",
   "last7Days": "7 ngày gần nhất",
   "less": "Ít",
-  "more": "Nhiều"
+  "more": "Nhiều",
+  "diagnostic": {
+    "summary_one": "{{count}} phiên vượt mức thường lệ trong {{days}} ngày",
+    "summary_other": "{{count}} phiên vượt mức thường lệ trong {{days}} ngày",
+    "sample_one": "Đã phân tích {{count}} phiên",
+    "sample_other": "Đã phân tích {{count}} phiên",
+    "period": "Khoảng thời gian",
+    "days": "{{count}} ngày",
+    "thresholdHint": "Một phiên nổi bật khi vượt giá trị lớn hơn giữa P90 của bạn và một mức sàn cố định.",
+    "p90": "P90 của bạn {{value}}",
+    "noP90": "chưa có P90",
+    "floor": "mức sàn {{value}}",
+    "metric": {
+      "cost": "Chi phí",
+      "tokens": "Token",
+      "duration_min": "Thời lượng",
+      "compactions": "Lần nén",
+      "tool_calls": "Lệnh gọi công cụ"
+    },
+    "estimated": "ước tính",
+    "colSession": "Phiên",
+    "colStarted": "Bắt đầu",
+    "colAbove": "Vượt ngưỡng",
+    "empty": "Không có phiên nào nổi bật trong khoảng thời gian này.",
+    "limitsTitle": "Không đo được",
+    "limit": {
+      "tool_errors_not_captured": "Hook không ghi lại lỗi công cụ.",
+      "active_sessions_excluded": "Các phiên đang chạy bị loại trừ.",
+      "cost_estimated": "Chi phí là ước tính theo bảng giá.",
+      "small_sample": "Dưới 10 phiên: chỉ áp dụng mức sàn cố định.",
+      "cursor_cost_unreliable": "Chi phí Cursor chỉ là gần đúng."
+    },
+    "loadError": "Không thể tính chẩn đoán. Hãy kiểm tra máy chủ đang chạy rồi tải lại.",
+    "sessionBoxTitle": "Phiên này nổi bật",
+    "sessionBoxBody": "So với các phiên trong {{days}} ngày qua:",
+    "versus": "{{value}} so với {{threshold}}"
+  }
 }
