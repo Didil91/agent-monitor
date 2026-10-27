@@ -29,9 +29,11 @@ export function formatDiagnosticValue(metric: DiagnosticMetric, value: number): 
 }
 
 export function formatRatio(ratio: number): string {
-  const formatted = new Intl.NumberFormat(getCurrentLocale(), { maximumFractionDigits: 1 }).format(
-    ratio
-  );
+  // Just past the threshold, one decimal would round a flagged ratio to "×1".
+  const fractionDigits = ratio < 1.1 ? 2 : 1;
+  const formatted = new Intl.NumberFormat(getCurrentLocale(), {
+    maximumFractionDigits: fractionDigits,
+  }).format(ratio);
   return `×${formatted}`;
 }
 

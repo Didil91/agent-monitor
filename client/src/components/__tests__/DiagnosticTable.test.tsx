@@ -80,6 +80,19 @@ describe("DiagnosticTable", () => {
     await i18n.changeLanguage("en");
   });
 
+  it("never shows a flagged ratio as a flat ×1", () => {
+    renderTable({
+      ...diagnostic,
+      sessions: [
+        {
+          ...diagnostic.sessions[0]!,
+          flags: [{ metric: "tokens", value: 101, threshold: 100, ratio: 1.01, kind: "measured" }],
+        },
+      ],
+    });
+    expect(screen.getByText("×1.01")).toBeInTheDocument();
+  });
+
   it("empty state when nothing is flagged", () => {
     renderTable({ ...diagnostic, sessions: [] });
     expect(screen.getByText("No session stands out over this period.")).toBeInTheDocument();
