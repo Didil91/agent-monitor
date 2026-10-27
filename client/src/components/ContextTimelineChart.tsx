@@ -52,8 +52,8 @@ export function ContextTimelineChart({ timeline }: { timeline: ContextTimeline }
           <Gauge className="h-3.5 w-3.5 text-sky-400" />
           {t("contextTitle")}
         </h3>
-        <div className="flex items-center gap-3 font-mono text-[11px]">
-          <span className="text-gray-500">{t("contextPeak", { tokens: fmt(peak) })}</span>
+        <div className="flex items-center gap-3 font-mono text-xs tabular-nums">
+          <span className="text-gray-400">{t("contextPeak", { tokens: fmt(peak) })}</span>
           {latest != null && (
             <span className="text-sky-300">{t("contextLatest", { tokens: fmt(latest) })}</span>
           )}
@@ -235,26 +235,26 @@ function CompactionList({ compactions }: { compactions: ContextCompaction[] }) {
       {compactions.map((compaction, index) => (
         <li
           key={compaction.uuid ?? index}
-          className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2 text-[11px]"
+          className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2 text-xs tabular-nums"
         >
-          <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border border-amber-400 bg-amber-400/15 text-[10px] font-semibold text-amber-300">
+          <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border border-amber-400 bg-amber-400/15 text-[11px] font-semibold text-amber-200">
             {index + 1}
           </span>
           {compaction.timestamp && (
-            <span className="font-mono text-gray-500">{formatTime(compaction.timestamp)}</span>
+            <span className="font-mono text-gray-400">{formatTime(compaction.timestamp)}</span>
           )}
           <span className="font-mono text-gray-200">
             {compactionSizes(compaction, t("contextNotResumed"))}
           </span>
           <FreedShare compaction={compaction} />
           {compaction.trigger && (
-            <span className="rounded bg-amber-400/15 px-1.5 py-0.5 text-[10px] text-amber-300">
+            <span className="rounded bg-amber-400/15 px-1.5 py-0.5 text-[11px] text-amber-200">
               {compaction.trigger === "auto"
                 ? t("compactionTriggerAuto")
                 : t("compactionTriggerManual")}
             </span>
           )}
-          <span className="text-gray-500 sm:ml-auto">
+          <span className="text-gray-400 sm:ml-auto">
             {t("contextReplaced", { count: compaction.replaced_messages })}
           </span>
         </li>
@@ -274,7 +274,7 @@ function FreedShare({ compaction }: { compaction: ContextCompaction }) {
   const freed = 1 - compaction.post_tokens / compaction.pre_tokens;
   if (freed <= 0) return null;
   return (
-    <span className="rounded bg-emerald-400/10 px-1.5 py-0.5 font-mono text-[10px] text-emerald-300">
+    <span className="rounded bg-emerald-400/10 px-1.5 py-0.5 font-mono text-[11px] text-emerald-200">
       −{Math.round(freed * 100)}%
     </span>
   );

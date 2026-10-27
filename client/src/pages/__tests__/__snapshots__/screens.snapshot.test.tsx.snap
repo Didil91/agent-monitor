@@ -6386,7 +6386,7 @@ exports[`screen snapshots > Session detail 1`] = `
             class="rounded-lg border px-3 py-2.5 border-surface-3 bg-surface-2 text-gray-200"
           >
             <div
-              class="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-gray-500"
+              class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-gray-400"
             >
               <span
                 class="text-gray-500"
@@ -6420,7 +6420,7 @@ exports[`screen snapshots > Session detail 1`] = `
             class="rounded-lg border px-3 py-2.5 border-violet-500/20 bg-violet-500/5 text-violet-200"
           >
             <div
-              class="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-gray-500"
+              class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-gray-400"
             >
               <span
                 class="text-violet-400"
@@ -6454,7 +6454,7 @@ exports[`screen snapshots > Session detail 1`] = `
             class="rounded-lg border px-3 py-2.5 border-cyan-500/20 bg-cyan-500/5 text-cyan-200"
           >
             <div
-              class="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-gray-500"
+              class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-gray-400"
             >
               <span
                 class="text-cyan-400"
@@ -6504,7 +6504,7 @@ exports[`screen snapshots > Session detail 1`] = `
             class="rounded-lg border px-3 py-2.5 border-blue-500/20 bg-blue-500/5 text-blue-200"
           >
             <div
-              class="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-gray-500"
+              class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-gray-400"
             >
               <span
                 class="text-blue-400"
@@ -6544,7 +6544,7 @@ exports[`screen snapshots > Session detail 1`] = `
             class="rounded-lg border px-3 py-2.5 border-surface-3 bg-surface-2 text-gray-200"
           >
             <div
-              class="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-gray-500"
+              class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-gray-400"
             >
               <span
                 class="text-gray-500"
@@ -6584,7 +6584,7 @@ exports[`screen snapshots > Session detail 1`] = `
             class="rounded-lg border px-3 py-2.5 border-emerald-500/20 bg-emerald-500/5 text-emerald-200"
           >
             <div
-              class="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-gray-500"
+              class="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-gray-400"
             >
               <span
                 class="text-emerald-400"
@@ -6619,7 +6619,7 @@ exports[`screen snapshots > Session detail 1`] = `
               1h 0m
             </div>
             <div
-              class="text-[10px] text-gray-500 mt-0.5"
+              class="text-[11px] text-gray-400 mt-0.5"
             >
               running
             </div>
@@ -6656,7 +6656,7 @@ exports[`screen snapshots > Session detail 1`] = `
                 Top tools
               </h3>
               <span
-                class="text-[10px] text-gray-500 font-mono"
+                class="text-[11px] text-gray-400 font-mono"
               >
                 0
                  total
@@ -6712,7 +6712,7 @@ exports[`screen snapshots > Session detail 1`] = `
                 Subagents
               </h3>
               <span
-                class="text-[10px] text-gray-500 font-mono"
+                class="text-[11px] text-gray-400 font-mono"
               >
                 0
                  runs

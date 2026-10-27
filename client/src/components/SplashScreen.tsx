@@ -624,7 +624,7 @@ const SPLASH_CSS = `
   display: inline-flex;
   margin-bottom: 2.75rem;
   opacity: 0;
-  animation: splashMark 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards;
+  animation: splashMark 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
 }
 .splash-mark-glow {
   position: absolute;
@@ -699,14 +699,14 @@ const SPLASH_CSS = `
   animation: splashRise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 .splash-sub-1 { animation-delay: 0.82s; }
-.splash-sub-2 { animation-delay: 0.94s; color: #6f6f86; margin-top: 0.35rem; }
+.splash-sub-2 { animation-delay: 0.94s; color: #8b8ba2; margin-top: 0.35rem; }
 .splash-brand {
   margin-top: 2.75rem;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: #4a4a60;
+  color: #85859c;
   opacity: 0;
   animation: splashRise 0.7s ease 1.1s forwards;
 }
@@ -728,16 +728,16 @@ const SPLASH_CSS = `
 .splash-provider-card.is-selected { color: #e5e7ff; border-color: #818cf8; background: rgba(79, 70, 229, 0.18); box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.25), 0 8px 28px rgba(49, 46, 129, 0.2); }
 .splash-provider-card:disabled { cursor: wait; opacity: 0.65; }
 .splash-provider-card-name { display: block; color: inherit; font-size: 0.78rem; font-weight: 650; margin-bottom: 0.35rem; }
-.splash-provider-card em { font-style: normal; color: #fbbf24; font-size: 0.6rem; margin-left: 0.2rem; text-transform: uppercase; letter-spacing: 0.07em; }
-.splash-provider-card span:last-child { display: block; font-size: 0.67rem; line-height: 1.35; }
-.splash-continue { display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; margin-top: 0.9rem; border: 0; border-radius: 0.55rem; background: #6366f1; color: #fff; padding: 0.55rem 1.25rem; font-size: 0.78rem; font-weight: 650; cursor: pointer; transition: 160ms ease; }
-.splash-continue:hover:not(:disabled) { background: #818cf8; transform: translateY(-1px); }
+.splash-provider-card em { font-style: normal; color: #fbbf24; font-size: 0.7rem; margin-left: 0.2rem; text-transform: uppercase; letter-spacing: 0.07em; }
+.splash-provider-card span:last-child { display: block; font-size: 0.72rem; line-height: 1.35; }
+.splash-continue { display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; margin-top: 0.9rem; border: 0; border-radius: 0.55rem; background: #4f46e5; color: #fff; padding: 0.55rem 1.25rem; font-size: 0.8rem; font-weight: 650; cursor: pointer; transition: 160ms ease; }
+.splash-continue:hover:not(:disabled) { background: #6366f1; transform: translateY(-1px); }
 .splash-continue:disabled { cursor: wait; opacity: 0.7; }
 .splash-palette-hint {
   margin: 0.85rem 0 0;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   line-height: 1.5;
-  color: #7b7b93;
+  color: #8b8ba2;
 }
 .splash-hook-gate-backdrop {
   position: fixed; inset: 0; z-index: 4; display: grid; place-items: center; padding: 1.25rem;

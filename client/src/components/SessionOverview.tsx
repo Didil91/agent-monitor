@@ -129,14 +129,14 @@ function StatTile({
 
   return (
     <div className={`rounded-lg border px-3 py-2.5 ${palette}`}>
-      <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-gray-500">
+      <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-gray-400">
         <span className={iconTone}>{icon}</span>
         {label}
       </div>
       <div className="mt-1 font-mono text-lg font-semibold text-gray-100 leading-tight">
         {value}
       </div>
-      {hint && <div className="text-[10px] text-gray-500 mt-0.5">{hint}</div>}
+      {hint && <div className="text-[11px] text-gray-400 mt-0.5">{hint}</div>}
     </div>
   );
 }
@@ -383,7 +383,7 @@ export function SessionOverview({ session, agents }: SessionOverviewProps) {
               <Wrench className="w-3.5 h-3.5 text-violet-400" />
               Top tools
             </h3>
-            <span className="text-[10px] text-gray-500 font-mono">
+            <span className="text-[11px] text-gray-400 font-mono">
               {stats.tools_used.length} total
             </span>
           </div>
@@ -442,7 +442,7 @@ export function SessionOverview({ session, agents }: SessionOverviewProps) {
                     <GitBranch className="w-3.5 h-3.5 text-cyan-400" />
                     Subagents
                   </h3>
-                  <span className="text-[10px] text-gray-500 font-mono">{totalRuns} runs</span>
+                  <span className="text-[11px] text-gray-400 font-mono">{totalRuns} runs</span>
                 </div>
                 {rows.length === 0 ? (
                   <div className="text-center py-6 text-xs text-gray-500">
@@ -491,7 +491,7 @@ export function SessionOverview({ session, agents }: SessionOverviewProps) {
               <Coins className="w-3.5 h-3.5 text-amber-400" />
               Token flow
             </h3>
-            <span className="text-[10px] text-gray-500 font-mono">{fmt(totalTokens)} total</span>
+            <span className="text-[11px] text-gray-400 font-mono">{fmt(totalTokens)} total</span>
           </div>
           <TokenFlowBar tokens={tokens} total={totalTokens} />
         </div>
@@ -580,7 +580,7 @@ function TokenFlowBar({ tokens, total }: { tokens: SessionStats["tokens"]; total
               <span className={`font-mono ml-auto ${s.text}`}>
                 {fmt(s.value)}
                 {pct > 0 && (
-                  <span className="text-gray-600 text-[10px] ml-1">
+                  <span className="text-gray-400 text-[11px] ml-1">
                     {pct >= 1 ? Math.round(pct) : pct.toFixed(1)}%
                   </span>
                 )}
