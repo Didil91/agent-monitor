@@ -178,6 +178,28 @@ describe("calculateCursorCost — Cursor rate-card isolation", () => {
     assert.equal(fast.breakdown[0].provider, "cursor");
   });
 
+  it("collapses date-split rows into one breakdown entry per model and speed", () => {
+    const result = calculateCursorCost(
+      [
+        bucket({ model: "grok-4.6", input_tokens: M }),
+        bucket({ model: "grok-4.6", input_tokens: M }),
+        bucket({ model: "grok-4.6", speed: "fast", input_tokens: M }),
+        bucket({ model: "unpriced-model", input_tokens: M }),
+        bucket({ model: "unpriced-model", input_tokens: M }),
+      ],
+      cursorRules
+    );
+    assert.equal(result.breakdown.length, 3);
+    const standard = result.breakdown.find(
+      (entry) => entry.model === "grok-4.6" && entry.speed === "standard"
+    );
+    assert.equal(standard.input_tokens, 2 * M);
+    assert.equal(standard.cost, 4);
+    assert.equal(result.total_cost, 8);
+    assert.equal(result.unpriced_models.length, 1);
+    assert.equal(result.unpriced_models[0].input_tokens, 2 * M);
+  });
+
   it("does not fall through to Claude pricing", () => {
     const result = calculateProviderCost(
       [{ ...bucket({ model: "grok-4.6", input_tokens: M }), provider: "cursor" }],

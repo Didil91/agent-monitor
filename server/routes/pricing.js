@@ -314,11 +314,14 @@ function calculateCursorCost(tokenRows, pricingRules) {
   const sortedRules = [...pricingRules].sort(
     (a, b) => b.model_pattern.length - a.model_pattern.length
   );
-  const breakdown = [];
-  const unpriced = [];
+  // Rows arrive split by day (and session); collapse to one entry per model and
+  // speed, as the Claude and GPT calculators do, so a model is listed once.
+  const breakdownMap = new Map();
+  const unpriced = new Map();
   let total = 0;
   for (const row of tokenRows) {
     const model = String(row.model || "unknown");
+    const speed = row.speed || "standard";
     const candidates = row.speed === "fast" ? [`${model}-fast`, model] : [model];
     const rule = sortedRules.find((candidate) =>
       candidates.some((value) => matchesModelPattern(candidate.model_pattern, value))
@@ -334,37 +337,53 @@ function calculateCursorCost(tokenRows, pricingRules) {
         (output / 1e6) * rule.output_per_mtok
       : 0;
     total += cost;
-    const item = {
+
+    const key = `${model}|${speed}`;
+    const entry = breakdownMap.get(key) || {
       provider: "cursor",
       model,
-      speed: row.speed || "standard",
-      input_tokens: input,
-      output_tokens: output,
-      cache_read_tokens: cacheRead,
-      cache_write_tokens: cacheWrite,
+      speed,
+      input_tokens: 0,
+      output_tokens: 0,
+      cache_read_tokens: 0,
+      cache_write_tokens: 0,
       cache_write_1h_tokens: 0,
       web_search_requests: 0,
       web_fetch_requests: 0,
       code_execution_requests: 0,
       matched_rule: rule?.model_pattern || null,
-      cost: round4(cost),
+      _cost: 0,
     };
-    breakdown.push(item);
+    entry.input_tokens += input;
+    entry.output_tokens += output;
+    entry.cache_read_tokens += cacheRead;
+    entry.cache_write_tokens += cacheWrite;
+    entry._cost += cost;
+    breakdownMap.set(key, entry);
+
     if (!rule) {
-      unpriced.push({
+      const missing = unpriced.get(key) || {
         model,
-        speed: row.speed || "standard",
+        speed,
         reason: "No Cursor pricing rule matches this model",
-        input_tokens: input,
-        output_tokens: output,
-        cache_read_tokens: cacheRead,
-        cache_write_tokens: cacheWrite,
-      });
+        input_tokens: 0,
+        output_tokens: 0,
+        cache_read_tokens: 0,
+        cache_write_tokens: 0,
+      };
+      missing.input_tokens += input;
+      missing.output_tokens += output;
+      missing.cache_read_tokens += cacheRead;
+      missing.cache_write_tokens += cacheWrite;
+      unpriced.set(key, missing);
     }
   }
   return {
     total_cost: round4(total),
-    breakdown,
+    breakdown: [...breakdownMap.values()].map(({ _cost, ...entry }) => ({
+      ...entry,
+      cost: round4(_cost),
+    })),
     feature_costs: {
       web_search_cost: 0,
       web_fetch_cost: 0,
@@ -372,7 +391,7 @@ function calculateCursorCost(tokenRows, pricingRules) {
       code_execution_hours_estimated: 0,
       code_execution_free_hours: CODE_EXEC_FREE_HOURS,
     },
-    unpriced_models: unpriced,
+    unpriced_models: [...unpriced.values()],
   };
 }
 
