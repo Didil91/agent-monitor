@@ -62,6 +62,27 @@ describe("ContextTimelineChart", () => {
     expect(screen.getByText("Now 150.0K")).toBeInTheDocument();
   });
 
+  it("keeps a compaction before the first turn inside the plot", () => {
+    render(
+      <ContextTimelineChart
+        timeline={{
+          points: timeline.points.slice(0, 2),
+          compactions: [{ ...timeline.compactions[0]!, after_turn: 0 }],
+        }}
+      />
+    );
+    const transform = screen.getByTestId("compaction-marker").getAttribute("transform") ?? "";
+    const x = Number(/translate\(([-\d.]+),/.exec(transform)?.[1]);
+    expect(x).toBeGreaterThanOrEqual(0);
+  });
+
+  it("draws a dot when the timeline has a single turn", () => {
+    render(
+      <ContextTimelineChart timeline={{ points: timeline.points.slice(0, 1), compactions: [] }} />
+    );
+    expect(screen.getByTestId("context-single-point")).toBeInTheDocument();
+  });
+
   it("renders nothing for an empty timeline", () => {
     const { container } = render(
       <ContextTimelineChart timeline={{ points: [], compactions: [] }} />

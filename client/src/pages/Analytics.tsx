@@ -672,7 +672,7 @@ function AnalyticsChartsSkeleton() {
   );
 }
 
-/** Tab keys in render order — also the order `1`…`4` and `[`/`]` address them. */
+/** Tab keys in render order — also the order `1`…`5` and `[`/`]` address them. */
 const ANALYTICS_TABS = ["cost", "tokens", "productivity", "workflow", "diagnostic"] as const;
 
 /** Label key per tab, kept beside the order so the two cannot drift. */
@@ -1070,7 +1070,7 @@ export function Analytics() {
 
           {/* Tabs */}
           <div>
-            <div className="flex gap-1 bg-surface-2 rounded-lg p-1 mb-6 w-fit">
+            <div className="flex flex-wrap gap-1 bg-surface-2 rounded-lg p-1 mb-6 w-fit max-w-full">
               {ANALYTICS_TABS.map((key) => (
                 <button
                   key={key}

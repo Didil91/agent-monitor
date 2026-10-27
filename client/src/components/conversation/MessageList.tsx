@@ -264,7 +264,7 @@ function CompactionSummary({ message }: { message: TranscriptMessage }) {
     <div className="mx-auto max-w-3xl">
       <CollapsibleBlock
         text={text}
-        icon={<ScrollText className="w-3.5 h-3.5 text-amber-300/70 flex-shrink-0" />}
+        icon={<ScrollText className="w-3.5 h-3.5 text-amber-300 flex-shrink-0" />}
         title={t("compactionSummaryToggle")}
         borderClass="border-amber-400/20"
         bgClass="bg-amber-400/[0.04]"

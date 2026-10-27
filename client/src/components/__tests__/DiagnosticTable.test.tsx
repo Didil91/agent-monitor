@@ -72,6 +72,14 @@ describe("DiagnosticTable", () => {
     expect(screen.getByText("Tool errors aren't recorded by the hooks.")).toBeInTheDocument();
   });
 
+  it("formats ratios with the current locale", async () => {
+    const { default: i18n } = await import("../../i18n");
+    await i18n.changeLanguage("fr");
+    renderTable(diagnostic);
+    expect(screen.getByText("×12,5")).toBeInTheDocument();
+    await i18n.changeLanguage("en");
+  });
+
   it("empty state when nothing is flagged", () => {
     renderTable({ ...diagnostic, sessions: [] });
     expect(screen.getByText("No session stands out over this period.")).toBeInTheDocument();

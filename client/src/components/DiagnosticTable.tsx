@@ -10,7 +10,7 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { Info } from "lucide-react";
-import { fmt, formatDateTime, formatMs } from "../lib/format";
+import { fmt, fmtCost, formatDateTime, formatMs, getCurrentLocale } from "../lib/format";
 import type { DiagnosticFlag, DiagnosticMetric, SessionDiagnostic } from "../lib/types";
 
 const METRIC_ORDER: DiagnosticMetric[] = [
@@ -22,14 +22,17 @@ const METRIC_ORDER: DiagnosticMetric[] = [
 ];
 
 export function formatDiagnosticValue(metric: DiagnosticMetric, value: number): string {
-  if (metric === "cost") return `$${value.toFixed(2)}`;
+  if (metric === "cost") return fmtCost(value);
   if (metric === "tokens") return fmt(value);
   if (metric === "duration_min") return formatMs(value * 60_000);
   return String(Math.round(value));
 }
 
 export function formatRatio(ratio: number): string {
-  return `×${Number.isInteger(ratio) ? ratio : ratio.toFixed(1)}`;
+  const formatted = new Intl.NumberFormat(getCurrentLocale(), { maximumFractionDigits: 1 }).format(
+    ratio
+  );
+  return `×${formatted}`;
 }
 
 /** Chip tone by how far past the threshold: the further, the louder. */

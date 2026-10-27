@@ -174,7 +174,12 @@ function ToolUsageRow({ toolName, count, max }: { toolName: string; count: numbe
 export function SessionOverview({ session, agents }: SessionOverviewProps) {
   const [stats, setStats] = useState<SessionStats | null>(null);
   const isClaudeSession = (session.provider ?? "claude") === "claude";
-  const contextTimeline = useContextTimeline(session.id, isClaudeSession, stats?.total_events ?? 0);
+  // Wait for stats so the first load and the refresh key arrive together.
+  const contextTimeline = useContextTimeline(
+    session.id,
+    isClaudeSession && stats?.session_id === session.id,
+    stats?.total_events ?? 0
+  );
   const { diagnostic } = useSessionDiagnostic(SESSION_DIAGNOSTIC_DAYS, session.status !== "active");
   const diagnosticFlags = diagnostic?.sessions.find((flagged) => flagged.id === session.id)?.flags;
   const refreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);

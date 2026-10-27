@@ -146,13 +146,26 @@ function ContextCurve({
           <path
             d={chart.linePath}
             fill="none"
+            stroke="currentColor"
             strokeWidth={1.75}
-            className="stroke-sky-400"
+            className="text-sky-400"
             strokeLinejoin="round"
           />
+          {points.length === 1 && (
+            <circle
+              data-testid="context-single-point"
+              cx={chart.x(1)}
+              cy={chart.y(points[0]!.context_tokens)}
+              r={3.5}
+              fill="currentColor"
+              className="text-sky-400"
+            />
+          )}
 
           {compactions.map((compaction, index) => {
-            const markerX = chart.x(Math.min(compaction.after_turn + 0.5, points.length));
+            const markerX = chart.x(
+              Math.max(1, Math.min(compaction.after_turn + 0.5, points.length))
+            );
             return (
               <g
                 key={compaction.uuid ?? index}
@@ -192,10 +205,16 @@ function ContextCurve({
             <g transform={`translate(${chart.x(hovered.turn)},${chart.y(hovered.context_tokens)})`}>
               <line
                 y2={innerH - chart.y(hovered.context_tokens)}
-                className="stroke-sky-300/40"
+                stroke="currentColor"
+                className="text-sky-400 opacity-40"
                 strokeWidth={1}
               />
-              <circle r={3.5} className="fill-sky-300 stroke-surface-1" strokeWidth={1.5} />
+              <circle
+                r={3.5}
+                fill="currentColor"
+                className="stroke-surface-1 text-sky-400"
+                strokeWidth={1.5}
+              />
             </g>
           )}
 
