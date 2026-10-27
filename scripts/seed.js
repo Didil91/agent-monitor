@@ -15,6 +15,16 @@
  *                                     (old behavior; produces unbounded data
  *                                     on repeat runs — use intentionally).
  *
+ *   node scripts/seed.js --demo       Presentation dataset (scripts/demo-dataset.js):
+ *                                     six fictional projects and branches over
+ *                                     Claude Code, Codex and Cursor, live /
+ *                                     waiting / error / finished sessions, two
+ *                                     outliers for Atypical Sessions, and
+ *                                     transcripts with compactions written to
+ *                                     the dashboard's snapshot dir (never to
+ *                                     ~/.claude). With --reset, demo rows are
+ *                                     removed first. Also: npm run seed:demo.
+ *
  *   node scripts/seed.js --reset      Remove existing fixture rows before
  *                                     re-inserting them (e.g. to refresh
  *                                     timestamps). Only deletes fixture
@@ -28,6 +38,8 @@
 
 const { v4: uuidv4 } = require("uuid");
 const { db, stmts } = require("../server/db");
+const { getTranscriptSnapshotDir } = require("../server/lib/claude-home");
+const { seedDemoDataset, removeDemoDataset } = require("./demo-dataset");
 
 // ── Stable fixture IDs ─────────────────────────────────────────────────────
 // These IDs are intentionally non-UUID-shaped strings prefixed with `demo-`
@@ -67,6 +79,7 @@ const FIXTURE_SESSION_IDS = [
 const args = new Set(process.argv.slice(2));
 const FULL = args.has("--full");
 const RESET = args.has("--reset");
+const DEMO = args.has("--demo");
 
 function randomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -595,8 +608,23 @@ function seedFullDemo() {
   tx();
 }
 
+/** --demo seeds the presentation dataset alone, without the test fixtures. */
+function seedDemo() {
+  const snapshotDir = getTranscriptSnapshotDir();
+  if (RESET) removeDemoDataset({ db, snapshotDir });
+  const demo = seedDemoDataset({ db, snapshotDir });
+  console.log(
+    `Demo dataset: ${demo.inserted} session(s) inserted, ${demo.transcripts.length} transcript(s) in ${snapshotDir}`
+  );
+}
+
 function main() {
   console.log("Seeding database (additive — existing data is preserved)...\n");
+
+  if (DEMO) {
+    seedDemo();
+    return;
+  }
 
   if (RESET) {
     console.log("--reset: removing existing fixture rows before re-inserting.");

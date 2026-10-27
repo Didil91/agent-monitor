@@ -456,6 +456,8 @@ npm run seed
 
 创建 8 个示例会话、23 个 Agent 和 106 个事件，让你可以立即浏览 UI。
 
+用于截图、演示和视频时，`npm run seed:demo` 会加载一套展示用数据集：横跨 Claude Code、Codex 和 Cursor 的六个虚构项目及其分支，包含运行中、等待中、出错和已完成的会话、子 Agent 树、供 **异常会话** 标记的两个离群会话，以及带压缩记录、用于 **上下文窗口** 曲线的转录。演示数据行以 `demo-set-` 为前缀，重复运行不会新增数据，`--demo --reset` 会重新创建它们，转录写入仪表板自己的快照目录，绝不写入 `~/.claude`。将 `DASHBOARD_DB_PATH`、`DASHBOARD_DATA_DIR` 和 `CLAUDE_HOME` 指向空目录，即可在不暴露你自己会话的情况下录制。
+
 ### 替代方案：桌面应用（macOS 与 Windows）
 
 如果你不想一直开着终端窗口，可以安装可选的**原生桌面应用**。它将 Express 服务器以进程内方式嵌入运行，提供菜单栏 / 通知区域（托盘）图标，并支持开机自启（macOS 登录项 / Windows 启动项）。
@@ -747,6 +749,7 @@ ccam version                      # 打印 CLI 版本（也可用 --version / -v
 | `npm start` | 启动生产服务器（提供构建后的客户端） |
 | `npm run install-hooks` | 在 `~/.claude/settings.json` 中配置 Claude Code Hook |
 | `npm run seed` | 用示例数据填充数据库 |
+| `npm run seed:demo` | 加载虚构的展示数据集（演示、视频） |
 | `npm run import-history` | 从 `~/.claude/` 导入历史会话（启动时也会运行） |
 | `npm run reconcile-tokens` | 刷新已导入会话的 Token 总计（不会降低已有的总计） |
 | `npm run repair-tokens` | 为每个 Transcript 仍在磁盘上的 **Claude** 会话（在 `~/.claude/projects/` 中查找，或按会话已保存的 `transcript_path`）重新推导**非 workflow** 的 Token 总计，并将上下文压缩基线清零；workflow 与 Codex 行保持不变。这是针对 v2.0.9 之前按记录累加用量而虚高，或遗漏同模型扁平子 Agent 用量的数据库的一次性修复。请先停止 Dashboard |

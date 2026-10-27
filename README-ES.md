@@ -450,6 +450,8 @@ npm run seed
 
 Crea 8 sesiones de muestra, 23 agentes y 106 eventos para que puedas explorar la interfaz de usuario inmediatamente.
 
+Para capturas, demos y vídeos, `npm run seed:demo` carga en su lugar un conjunto de datos de presentación: seis proyectos y ramas ficticios en Claude Code, Codex y Cursor, con sesiones en curso, en espera, con error y terminadas, árboles de subagentes, dos sesiones anómalas para **Sesiones atípicas** y transcripciones con compactaciones para la curva de **Ventana de contexto**. Las filas de demostración llevan el prefijo `demo-set-`, volver a ejecutarlo no añade nada nuevo, `--demo --reset` las vuelve a crear y las transcripciones se escriben en el directorio de instantáneas del propio panel, nunca en `~/.claude`. Apunta `DASHBOARD_DB_PATH`, `DASHBOARD_DATA_DIR` y `CLAUDE_HOME` a ubicaciones vacías para grabarlo sin tus propias sesiones.
+
 ### Alternativa: Aplicación para escritorio (macOS y Windows)
 
 Si prefieres no mantener un terminal abierto, instala la aplicación de escritorio **opcional nativa**. Incorpora el servidor en el proceso, agrega un icono de barra de menú / área de notificaciones ( bandeja) y admite el inicio automático al iniciar sesión (elementos de inicio de sesión de macOS / inicio de sesión de Windows).
@@ -751,6 +753,7 @@ Los comandos respaldados por API necesitan que el servidor esté en ejecución, 
 | `npm run test:client` | Ejecuta las pruebas de Vitest de la interfaz de usuario, incluidas **capturas de pantalla de renderizado para cada pantalla** (`client/src/pages/__tests__/screens.snapshot.test.tsx`); regenera las líneas de base después de cambios intencionados en la interfaz de usuario con `cd client && npx vitest run -u` |
 | `npm run install-hooks` | Configurar los ganchos de código Claude en `~/.claude/settings.json` |
 | `npm run seed`          | Rellenar la base de datos con datos de muestra                         |
+| `npm run seed:demo`     | Cargar el conjunto de datos de presentación ficticio (demos, vídeos) |
 | `npm run import-history`| Importar sesiones heredadas desde `~/.claude/` (también se ejecuta al iniciar la sesión) |
 | `npm run reconcile-tokens`| Actualizar los totales de tokens de las sesiones importadas (nunca reduce un total existente) |
 | `npm run repair-tokens` | Volver a derivar los totales de tokens **ajenos a workflow** de todas las sesiones de **Claude** cuya transcripción siga en disco (localizada en `~/.claude/projects/` o mediante el `transcript_path` guardado de la sesión) y poner a cero las líneas base de compactación; las filas de workflow y de Codex se conservan. Reparación única para bases de datos afectadas por la suma de usage por registro anterior a v2.0.9 o por usage omitido de subagentes planos del mismo modelo. Detén el dashboard primero |

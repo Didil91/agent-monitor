@@ -89,6 +89,7 @@
     "desktop:test": "cd desktop && npm test",
     "install-hooks": "node scripts/install-hooks.js",
     "seed": "node scripts/seed.js",
+    "seed:demo": "node scripts/seed.js --demo",
     "import-history": "node scripts/import-history.js",
     "reconcile-tokens": "node scripts/import-history.js --reconcile-tokens",
     "clear-data": "node scripts/clear-data.js",

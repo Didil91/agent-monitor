@@ -451,6 +451,8 @@ npm run seed
 
 Tạo 8 phiên mẫu, 23 nhân viên hỗ trợ và 106 sự kiện để bạn có thể khám phá giao diện người dùng ngay lập tức.
 
+Để chụp màn hình, demo và quay video, `npm run seed:demo` nạp một bộ dữ liệu trình diễn: sáu dự án và nhánh hư cấu trên Claude Code, Codex và Cursor, với các phiên đang chạy, đang chờ, lỗi và đã xong, cây subagent, hai phiên bất thường cho **Phiên bất thường**, và các bản ghi có lần nén cho đường cong **Cửa sổ ngữ cảnh**. Các dòng demo có tiền tố `demo-set-`, chạy lại không thêm gì mới, `--demo --reset` tạo lại chúng, và bản ghi được ghi vào thư mục snapshot riêng của dashboard, không bao giờ vào `~/.claude`. Trỏ `DASHBOARD_DB_PATH`, `DASHBOARD_DATA_DIR` và `CLAUDE_HOME` tới thư mục trống để quay mà không lộ phiên của bạn.
+
 ### Thay thế: Docker/Podman
 
 Image OCI chạy non-root, drop mọi capability, dùng Tini làm PID 1 và có Git/OpenSSH/SQLite. Docker Compose và Podman Compose dùng cùng một file.
@@ -745,6 +747,7 @@ Các lệnh dựa trên API cần server đang chạy — khi chưa chạy, **c�
 | `npm start`             | Bắt đầu máy chủ sản xuất (phục vụ máy khách được xây dựng)              |
 | `npm run install-hooks` | Định cấu hình móc Claude Code trong `~/.claude/settings.json`   |
 | `npm run seed`          | Điền vào cơ sở dữ liệu với dữ liệu mẫu                         |
+| `npm run seed:demo`     | Nạp bộ dữ liệu trình diễn hư cấu (demo, video)                 |
 | `npm run import-history`| Nhập các phiên kế thừa từ `~/.claude/` (cũng chạy khi khởi động) |
 | `npm run reconcile-tokens`| Làm mới tổng token cho các phiên đã nhập (không bao giờ hạ thấp một tổng đã có) |
 | `npm run repair-tokens` | Tính lại tổng token **không thuộc workflow** cho mọi phiên **Claude** còn transcript trên đĩa (tìm trong `~/.claude/projects/` hoặc theo `transcript_path` đã lưu của phiên) và đưa các baseline nén ngữ cảnh về 0; các hàng workflow và Codex được giữ nguyên. Bản sửa một lần cho cơ sở dữ liệu bị ảnh hưởng bởi cách cộng usage theo từng bản ghi trước v2.0.9 hoặc bị thiếu usage của subagent phẳng cùng model. Hãy dừng dashboard trước |

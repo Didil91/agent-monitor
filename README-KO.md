@@ -451,6 +451,8 @@ npm run seed
 
 8개의 샘플 세션, 23개의 에이전트, 106개의 이벤트를 생성하여 UI를 즉시 탐색할 수 있습니다.
 
+스크린샷, 데모, 영상을 위해서는 `npm run seed:demo`가 발표용 데이터셋을 불러옵니다. Claude Code, Codex, Cursor에 걸친 가상의 프로젝트 6개와 브랜치, 실행 중·대기 중·오류·완료 세션, 서브에이전트 트리, **비정상 세션**이 표시할 이상치 2개, **컨텍스트 윈도우** 곡선용 압축이 포함된 트랜스크립트가 들어 있습니다. 데모 행은 `demo-set-` 접두사를 쓰고, 다시 실행해도 새로 추가되지 않으며, `--demo --reset`으로 다시 만들 수 있습니다. 트랜스크립트는 대시보드 자체 스냅샷 디렉터리에만 기록되고 `~/.claude`에는 절대 기록되지 않습니다. `DASHBOARD_DB_PATH`, `DASHBOARD_DATA_DIR`, `CLAUDE_HOME`을 빈 위치로 지정하면 내 세션 없이 녹화할 수 있습니다.
+
 ### 대안: 데스크톱 앱 (macOS & Windows)
 
 터미널을 계속 열어 두고 싶지 않다면 선택적 **네이티브 데스크톱 앱**을 설치하세요. 서버를 인프로세스로 임베드하고, 메뉴 바 / 알림 영역(트레이) 아이콘을 추가하며, 로그인 시 자동 시작(macOS 로그인 항목 / Windows 시작 프로그램)을 지원합니다.
@@ -758,6 +760,7 @@ API 기반 명령어는 서버가 실행 중이어야 합니다 — 서버가 �
 | `npm run test:client`   | 프론트엔드 Vitest 테스트를 실행합니다. **모든 화면에 대한 렌더 스냅샷**(`client/src/pages/__tests__/screens.snapshot.test.tsx`)이 포함되며, 의도된 UI 변경 후에는 `cd client && npx vitest run -u`로 기준선을 재생성합니다 |
 | `npm run install-hooks` | `~/.claude/settings.json`에 Claude Code Hook을 구성합니다   |
 | `npm run seed`          | 샘플 데이터로 데이터베이스를 채웁니다                           |
+| `npm run seed:demo`     | 가상의 발표용 데이터셋 불러오기 (데모, 영상)                    |
 | `npm run import-history`| `~/.claude/`에서 레거시 세션을 가져옵니다 (시작 시에도 실행됨) |
 | `npm run reconcile-tokens`| 가져온 세션의 토큰 합계를 새로 계산합니다 (기존 합계를 낮추지는 않습니다) |
 | `npm run repair-tokens` | 트랜스크립트가 디스크에 남아 있는 모든 **Claude** 세션(`~/.claude/projects/` 또는 세션에 저장된 `transcript_path` 로 탐색)의 **workflow 가 아닌** 토큰 합계를 다시 도출하고 컨텍스트 압축 baseline 을 0으로 만듭니다. workflow 및 Codex 행은 그대로 유지됩니다. v2.0.9 이전의 레코드 단위 usage 합산 또는 누락된 동일 모델의 평면 서브에이전트 usage 영향을 받은 데이터베이스를 위한 일회성 복구입니다. 먼저 대시보드를 중지하세요 |

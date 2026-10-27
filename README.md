@@ -450,6 +450,8 @@ npm run seed
 
 Creates 8 sample sessions, 23 agents, and 106 events so you can explore the UI immediately.
 
+For screenshots, demos, and videos, `npm run seed:demo` loads a presentation dataset instead: six fictional projects and branches across Claude Code, Codex, and Cursor, with live, waiting, errored, and finished sessions, subagent trees, two outliers for **Atypical Sessions**, and transcripts with compactions for the **Context Window** curve. Demo rows are prefixed `demo-set-`, re-running inserts nothing new, `--demo --reset` recreates them, and transcripts go to the dashboard's own snapshot directory, never to `~/.claude`. Point `DASHBOARD_DB_PATH`, `DASHBOARD_DATA_DIR`, and `CLAUDE_HOME` at empty locations to film it without your own sessions.
+
 ### Alternative: Desktop App (macOS & Windows)
 
 If you'd rather not keep a terminal open, install the optional **native desktop app**. It embeds the server in-process, adds a menu-bar / notification-area (tray) icon, and supports auto-start at login (macOS Login Items / Windows startup).
@@ -760,6 +762,7 @@ API-backed commands need the server running — when it isn't, **read-only comma
 | `npm run test:client`   | Run frontend Vitest tests, including **render snapshots for every screen** (`client/src/pages/__tests__/screens.snapshot.test.tsx`); regenerate baselines after intentional UI changes with `cd client && npx vitest run -u` |
 | `npm run install-hooks` | Configure Claude Code hooks in `~/.claude/settings.json`   |
 | `npm run seed`          | Populate database with sample data                         |
+| `npm run seed:demo`     | Load the fictional presentation dataset (demos, videos)    |
 | `npm run import-history`| Import legacy sessions from `~/.claude/` (also runs on startup) |
 | `npm run reconcile-tokens`| Refresh token totals for imported sessions (never lowers a total) |
 | `npm run repair-tokens` | Re-derive **non-workflow** token totals for every **Claude** session with a transcript on disk (found under `~/.claude/projects/` or via the session's stored `transcript_path`) and zero the compaction baselines; workflow and Codex rows are preserved. One-time repair for databases affected by the pre-v2.0.9 per-record usage sum or by omitted same-model flat subagent usage. Stop the dashboard first |
