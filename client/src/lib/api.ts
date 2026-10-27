@@ -397,6 +397,7 @@ import type {
   Session,
   SessionDrillIn,
   SessionStats,
+  ContextTimeline,
   Stats,
   TranscriptListResult,
   TranscriptResult,
@@ -701,6 +702,14 @@ export const api = {
       const qs = applyScope(new URLSearchParams());
       return request<SessionStats>(
         `/sessions/${encodeURIComponent(id)}/stats${qs.size ? `?${qs.toString()}` : ""}`
+      );
+    },
+    /** GET /api/sessions/:id/context-timeline - context size per assistant turn
+     *  and one row per compaction (Claude sessions; empty for other providers). */
+    contextTimeline: (id: string) => {
+      const qs = applyScope(new URLSearchParams());
+      return request<ContextTimeline>(
+        `/sessions/${encodeURIComponent(id)}/context-timeline${qs.size ? `?${qs.toString()}` : ""}`
       );
     },
     /**

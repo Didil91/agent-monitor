@@ -90,5 +90,14 @@
   "compactionTriggerAuto": "자동",
   "compactionTriggerManual": "수동 (/compact)",
   "compactionTook": "{{duration}} 소요",
-  "compactionSummaryToggle": "기록을 대체한 요약"
+  "compactionSummaryToggle": "기록을 대체한 요약",
+  "contextTitle": "컨텍스트 창",
+  "contextPeak": "최고 {{tokens}}",
+  "contextLatest": "현재 {{tokens}}",
+  "contextChartLabel": "어시스턴트 턴별 컨텍스트 크기와 압축 지점",
+  "contextHover": "턴 {{turn}} · 토큰 {{tokens}}",
+  "contextCompactionMarker": "압축 {{n}}",
+  "contextNotResumed": "아직 재개되지 않음",
+  "contextReplaced_other": "메시지 {{count}}개 대체됨",
+  "contextReplaced_one": "메시지 {{count}}개 대체됨"
 }

@@ -90,5 +90,14 @@
   "compactionTriggerAuto": "tự động",
   "compactionTriggerManual": "thủ công (/compact)",
   "compactionTook": "trong {{duration}}",
-  "compactionSummaryToggle": "Bản tóm tắt thay thế lịch sử"
+  "compactionSummaryToggle": "Bản tóm tắt thay thế lịch sử",
+  "contextTitle": "Cửa sổ ngữ cảnh",
+  "contextPeak": "Đỉnh {{tokens}}",
+  "contextLatest": "Hiện tại {{tokens}}",
+  "contextChartLabel": "Kích thước ngữ cảnh ở mỗi lượt của trợ lý, có đánh dấu các lần nén",
+  "contextHover": "Lượt {{turn}} · {{tokens}} token",
+  "contextCompactionMarker": "Lần nén {{n}}",
+  "contextNotResumed": "chưa tiếp tục",
+  "contextReplaced_other": "Đã thay thế {{count}} tin nhắn",
+  "contextReplaced_one": "Đã thay thế {{count}} tin nhắn"
 }

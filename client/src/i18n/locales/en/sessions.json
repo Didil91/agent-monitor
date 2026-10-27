@@ -90,5 +90,14 @@
   "compactionTriggerAuto": "automatic",
   "compactionTriggerManual": "manual (/compact)",
   "compactionTook": "in {{duration}}",
-  "compactionSummaryToggle": "Summary that replaced the history"
+  "compactionSummaryToggle": "Summary that replaced the history",
+  "contextTitle": "Context window",
+  "contextPeak": "Peak {{tokens}}",
+  "contextLatest": "Now {{tokens}}",
+  "contextChartLabel": "Context size at each assistant turn, with compactions marked",
+  "contextHover": "Turn {{turn}} · {{tokens}} tokens",
+  "contextCompactionMarker": "Compaction {{n}}",
+  "contextNotResumed": "not resumed yet",
+  "contextReplaced_other": "{{count}} messages replaced",
+  "contextReplaced_one": "{{count}} message replaced"
 }

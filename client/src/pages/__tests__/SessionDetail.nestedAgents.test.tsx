@@ -60,6 +60,7 @@ vi.mock("../../lib/api", () => ({
         })
       ),
       transcripts: vi.fn(() => Promise.resolve({ transcripts: [] })),
+      contextTimeline: vi.fn(() => Promise.resolve({ points: [], compactions: [] })),
       stats: vi.fn(() =>
         Promise.resolve({
           session_id: mockSession.id,

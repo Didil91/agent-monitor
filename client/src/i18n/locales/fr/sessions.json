@@ -90,5 +90,14 @@
   "compactionTriggerAuto": "automatique",
   "compactionTriggerManual": "manuelle (/compact)",
   "compactionTook": "en {{duration}}",
-  "compactionSummaryToggle": "Résumé qui a remplacé l'historique"
+  "compactionSummaryToggle": "Résumé qui a remplacé l'historique",
+  "contextTitle": "Fenêtre de contexte",
+  "contextPeak": "Pic {{tokens}}",
+  "contextLatest": "Actuel {{tokens}}",
+  "contextChartLabel": "Taille du contexte à chaque tour de l'assistant, compactions marquées",
+  "contextHover": "Tour {{turn}} · {{tokens}} tokens",
+  "contextCompactionMarker": "Compaction {{n}}",
+  "contextNotResumed": "pas encore repris",
+  "contextReplaced_other": "{{count}} messages remplacés",
+  "contextReplaced_one": "{{count}} message remplacé"
 }

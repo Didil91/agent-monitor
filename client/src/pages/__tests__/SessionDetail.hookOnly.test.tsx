@@ -38,6 +38,7 @@ vi.mock("../../lib/api", () => ({
         Promise.resolve({ session: mockSession, agents: [agent], events: [] as DashboardEvent[] })
       ),
       transcripts: vi.fn(() => Promise.resolve({ transcripts: [] })),
+      contextTimeline: vi.fn(() => Promise.resolve({ points: [], compactions: [] })),
       stats: vi.fn(() =>
         Promise.resolve({
           session_id: "sess-ephemeral",

@@ -76,6 +76,8 @@ import { eventBus } from "../lib/eventBus";
 import { isRemoteDataRefreshMessage } from "../lib/remoteDataEvents";
 import { fmt, formatDuration } from "../lib/format";
 import { styleForTool } from "./conversation/toolStyle";
+import { ContextTimelineChart } from "./ContextTimelineChart";
+import { useContextTimeline } from "../hooks/useContextTimeline";
 import type { Agent, Session, SessionStats } from "../lib/types";
 
 interface SessionOverviewProps {
@@ -166,6 +168,8 @@ function ToolUsageRow({ toolName, count, max }: { toolName: string; count: numbe
 
 export function SessionOverview({ session, agents }: SessionOverviewProps) {
   const [stats, setStats] = useState<SessionStats | null>(null);
+  const isClaudeSession = (session.provider ?? "claude") === "claude";
+  const contextTimeline = useContextTimeline(session.id, isClaudeSession, stats?.total_events ?? 0);
   const refreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const fetchingRef = useRef(false);
 
@@ -356,6 +360,8 @@ export function SessionOverview({ session, agents }: SessionOverviewProps) {
           tone={session.status === "active" ? "emerald" : "default"}
         />
       </div>
+
+      {contextTimeline && <ContextTimelineChart timeline={contextTimeline} />}
 
       {/* Two-column layout: tools + subagent breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

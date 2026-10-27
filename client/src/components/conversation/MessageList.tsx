@@ -227,12 +227,12 @@ function CompactionSeam({ message }: { message: TranscriptMessage }) {
         <FoldVertical className="h-3.5 w-3.5 flex-shrink-0 text-amber-300" />
         <span className="font-semibold text-amber-200">{t("compactionTitle")}</span>
         {message.pre_tokens != null && (
-          <span className="text-amber-100/80">
+          <span className="text-amber-100">
             {t("compactionSummarized", { tokens: fmt(message.pre_tokens) })}
           </span>
         )}
         {trigger && (
-          <span className="rounded bg-amber-400/15 px-1.5 py-0.5 text-[10px] text-amber-200/90">
+          <span className="rounded bg-amber-400/15 px-1.5 py-0.5 text-[10px] text-amber-300">
             {trigger}
           </span>
         )}
@@ -268,7 +268,7 @@ function CompactionSummary({ message }: { message: TranscriptMessage }) {
         title={t("compactionSummaryToggle")}
         borderClass="border-amber-400/20"
         bgClass="bg-amber-400/[0.04]"
-        textClass="text-amber-200/80"
+        textClass="text-amber-200"
       />
     </div>
   );
@@ -577,7 +577,7 @@ export function MessageList({ messages, loading }: MessageListProps) {
                           }`}
                         />
                         <Brain className="w-3.5 h-3.5 text-amber-400/80" />
-                        <span className="text-xs text-amber-200/90 font-medium">Thinking</span>
+                        <span className="text-xs text-amber-300 font-medium">Thinking</span>
                         {!isExpanded && (
                           <span className="text-[10px] text-amber-300/40 font-mono ml-auto">
                             {block.text.length.toLocaleString()} chars
@@ -585,7 +585,7 @@ export function MessageList({ messages, loading }: MessageListProps) {
                         )}
                       </button>
                       {isExpanded && (
-                        <div className="border-t border-amber-500/10 px-3 py-2 text-amber-100/80">
+                        <div className="border-t border-amber-500/10 px-3 py-2 text-amber-100">
                           <MarkdownContent text={block.text} dense />
                         </div>
                       )}

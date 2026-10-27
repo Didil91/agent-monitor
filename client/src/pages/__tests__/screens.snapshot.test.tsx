@@ -210,6 +210,7 @@ vi.mock("../../lib/api", async (importOriginal) => {
         list: r({ sessions: [], total: 0, limit: 50, offset: 0 }),
         facets: r({ cwds: [], sources: ["local"] }),
         get: r({ session, agents: [], events: [], workflows: [sampleWorkflowRun] }),
+        contextTimeline: r({ points: [], compactions: [] }),
         stats: r({
           session_id: "sess-1",
           total_events: 0,

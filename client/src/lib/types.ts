@@ -2733,3 +2733,35 @@ export const SESSION_STATUS_CONFIG: Record<
     dot: "bg-slate-400",
   },
 };
+
+/** One assistant turn on the context-window curve of a session. */
+export interface ContextTimelinePoint {
+  /** 1-based assistant turn index (one per API message.id). */
+  turn: number;
+  timestamp: string | null;
+  /** Context size sent with this turn: input + cache read + cache creation. */
+  context_tokens: number;
+}
+
+/** One context compaction, as read from its `compact_boundary` line. */
+export interface ContextCompaction {
+  uuid: string | null;
+  timestamp: string | null;
+  /** "auto" or "manual"; null when the line did not say. */
+  trigger: string | null;
+  /** Context size just before compaction. */
+  pre_tokens: number | null;
+  /** Context size of the first assistant turn after it; null until one exists. */
+  post_tokens: number | null;
+  duration_ms: number | null;
+  /** User and assistant messages since the previous boundary, now summarized. */
+  replaced_messages: number;
+  /** Number of assistant turns before this boundary (its x position). */
+  after_turn: number;
+}
+
+/** Response shape of GET /api/sessions/:id/context-timeline. */
+export interface ContextTimeline {
+  points: ContextTimelinePoint[];
+  compactions: ContextCompaction[];
+}
