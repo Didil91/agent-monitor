@@ -2299,3 +2299,5 @@ agent-dashboard/
 ## 许可证
 
 MIT。详见 [LICENSE](LICENSE)。
+
+Testé avec la porte spec d'agent-stack.
