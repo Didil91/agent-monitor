@@ -2301,3 +2301,5 @@ agent-dashboard/
 MIT。详见 [LICENSE](LICENSE)。
 
 由 agent-stack 中继重新启动。
+
+Testé avec la porte spec d'agent-stack.

@@ -2384,3 +2384,5 @@ Todos los colaboradores deben firmar el [Acuerdo de Licencia del Colaborador](ht
 MIT. Consulte [LICENCIA](LICENCIA) para obtener detalles.
 
 Relanzado por el relé de agent-stack.
+
+Testé avec la porte spec d'agent-stack.

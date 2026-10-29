@@ -2389,3 +2389,5 @@ agent-dashboard/
 MIT. 자세한 내용은 [LICENSE](LICENSE)를 참조하십시오.
 
 agent-stack 릴레이에 의해 다시 실행되었습니다.
+
+Testé avec la porte spec d'agent-stack.

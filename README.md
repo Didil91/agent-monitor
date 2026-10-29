@@ -2404,3 +2404,5 @@ All contributors must sign the [Contributor License Agreement](https://github.co
 MIT. See [LICENSE](LICENSE) for details.
 
 Relancé par le relais d'agent-stack.
+
+Testé avec la porte spec d'agent-stack.
