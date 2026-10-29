@@ -63,6 +63,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { FolderOpen, Bot, Clock, Coins, Cpu } from "lucide-react";
 import { SessionStatusBadge } from "./StatusBadge";
+import { TicketTag } from "./TicketTag";
 import {
   effectiveSessionStatus,
   isSessionAwaitingInput,
@@ -157,14 +158,17 @@ export function SessionCard({ session, onClick }: SessionCardProps) {
             <FolderOpen className="w-3.5 h-3.5" />
           </div>
           <div className="min-w-0 overflow-hidden">
-            <p className="text-sm font-medium text-gray-200 truncate">{title}</p>
+            <div className="flex items-center gap-1.5 min-w-0">
+              <p className="text-sm font-medium text-gray-200 truncate">{title}</p>
+              <TicketTag cwd={session.cwd} />
+            </div>
             <p className="text-[11px] text-gray-500 font-mono truncate">
               {session.id.slice(0, 12)}
             </p>
           </div>
         </div>
-        {/* compact: cards are narrow — inline reason chip would squeeze the
-            title, so the reason stays hover-tooltip-only here. */}
+        {/* compact: cards are narrow — the reason label replaces "Waiting"
+            instead of adding an inline chip that would squeeze the title. */}
         <SessionStatusBadge
           status={status}
           reason={sessionAwaitingReason(session)}

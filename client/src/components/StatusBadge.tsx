@@ -1,6 +1,6 @@
 /**
  * @file StatusBadge.tsx
- * @description Defines reusable React components for displaying the status of agents and sessions in a visually distinct way using badges. The AgentStatusBadge component shows the current status of an agent with an optional pulsing effect for active states, while the SessionStatusBadge component indicates the status of a session. When a row is in the yellow "Waiting" overlay state, both badges can additionally render WHY it waits (the server's awaiting_reason: needs input / turn done / at prompt / interrupted) as a nested icon+label chip with a hover tooltip carrying the full explanation — or, in `compact` mode for tight card layouts, as the hover tooltip alone. Both components utilize predefined configurations for consistent styling across the application.
+ * @description Defines reusable React components for displaying the status of agents and sessions in a visually distinct way using badges. The AgentStatusBadge component shows the current status of an agent with an optional pulsing effect for active states, while the SessionStatusBadge component indicates the status of a session. When a row is in the yellow "Waiting" overlay state, both badges can additionally render WHY it waits (the server's awaiting_reason: needs input / turn done / at prompt / interrupted) as a nested icon+label chip with a hover tooltip carrying the full explanation — or, in `compact` mode for tight card layouts, by replacing the "Waiting" label with the reason label (same width, tooltip kept). Both components utilize predefined configurations for consistent styling across the application.
  * @author Son Nguyen <hoangson091104@gmail.com>
  */
 /* =============================================================================
@@ -113,9 +113,9 @@ interface AgentStatusBadgeProps {
   /** WHY the agent is waiting (from `agentAwaitingReason`); rendered as a
    *  nested icon+label chip with a tooltip. Ignored unless `status` is "waiting". */
   reason?: AwaitingReason | null;
-  /** Tooltip-only mode for tight layouts (Kanban/Dashboard cards): keeps the
-   *  hover explanation but suppresses the inline reason chip so the badge
-   *  never squeezes the card title. */
+  /** Narrow mode for tight layouts (Kanban/Dashboard cards): the reason label
+   *  replaces "Waiting" instead of adding an inline chip, so the badge never
+   *  squeezes the card title; the hover explanation stays. */
   compact?: boolean;
   /** Product that owns the waiting row; drives provider wording in the tooltip. */
   provider?: "claude" | "cursor" | "codex";
@@ -135,6 +135,7 @@ export function AgentStatusBadge({
   const shouldPulse = pulse ?? (status === "working" || status === "waiting");
   // Only decorate the Waiting overlay - a reason on any other status is stale.
   const shownReason = status === "waiting" && reason ? reason : null;
+  const labelKey = badgeLabelKey(config.labelKey, shownReason, compact);
 
   return (
     // Tip renders children unwrapped when raw is undefined (non-waiting rows).
@@ -154,11 +155,22 @@ export function AgentStatusBadge({
             shouldPulse ? "animate-pulse-dot" : ""
           }`}
         />
-        {t(config.labelKey)}
+        {t(labelKey)}
         {shownReason && !compact && <ReasonChip reason={shownReason} />}
       </span>
     </Tip>
   );
+}
+
+/** Compact badges have no room for the reason chip, so the reason label takes
+ *  the place of the generic "Waiting" label instead. */
+function badgeLabelKey(
+  statusLabelKey: string,
+  shownReason: AwaitingReason | null,
+  compact: boolean | undefined
+): string {
+  if (shownReason && compact) return AWAITING_REASON_CONFIG[shownReason].labelKey;
+  return statusLabelKey;
 }
 
 interface SessionStatusBadgeProps {
@@ -167,9 +179,9 @@ interface SessionStatusBadgeProps {
   /** WHY the session is waiting (from `sessionAwaitingReason`); rendered as a
    *  nested icon+label chip with a tooltip. Ignored unless `status` is "waiting". */
   reason?: AwaitingReason | null;
-  /** Tooltip-only mode for tight layouts (Kanban/Dashboard cards): keeps the
-   *  hover explanation but suppresses the inline reason chip so the badge
-   *  never squeezes the card title. */
+  /** Narrow mode for tight layouts (Kanban/Dashboard cards): the reason label
+   *  replaces "Waiting" instead of adding an inline chip, so the badge never
+   *  squeezes the card title; the hover explanation stays. */
   compact?: boolean;
   /** Product that owns the waiting row; drives provider wording in the tooltip. */
   provider?: "claude" | "cursor" | "codex";
@@ -186,6 +198,7 @@ export function SessionStatusBadge({
   const config = SESSION_STATUS_CONFIG[status];
   const shouldPulse = pulse ?? status === "waiting";
   const shownReason = status === "waiting" && reason ? reason : null;
+  const labelKey = badgeLabelKey(config.labelKey, shownReason, compact);
   return (
     <Tip
       raw={
@@ -204,7 +217,7 @@ export function SessionStatusBadge({
             aria-hidden="true"
           />
         )}
-        {t(config.labelKey)}
+        {t(labelKey)}
         {shownReason && !compact && <ReasonChip reason={shownReason} />}
       </span>
     </Tip>

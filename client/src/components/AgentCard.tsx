@@ -62,6 +62,7 @@ import { useTranslation } from "react-i18next";
 import { Bot, GitBranch, Clock, Wrench, Cpu, Coins } from "lucide-react";
 import { useNavigate } from "react-router";
 import { AgentStatusBadge } from "./StatusBadge";
+import { TicketTag } from "./TicketTag";
 import { TodoProgressIndicator } from "./TodoProgressIndicator";
 import { SessionCpu } from "./machine/SessionCpu";
 import { effectiveAgentStatus, isAgentAwaitingInput, agentAwaitingReason } from "../lib/types";
@@ -240,17 +241,20 @@ export function AgentCard({ agent, session, label, onClick }: AgentCardProps) {
             {isMain ? <Bot className="w-3.5 h-3.5" /> : <GitBranch className="w-3.5 h-3.5" />}
           </div>
           <div className="min-w-0 overflow-hidden">
-            <p className="text-sm font-medium text-gray-200 truncate">
-              {/* Provider-owned main cards use one consistent title shape:
-                  "Claude Code/Cursor/Codex · <native title or short ID>".
-                  Custom non-placeholder agent names remain untouched. */}
-              {displayName}
-            </p>
+            <div className="flex items-center gap-1.5 min-w-0">
+              <p className="text-sm font-medium text-gray-200 truncate">
+                {/* Provider-owned main cards use one consistent title shape:
+                    "Claude Code/Cursor/Codex · <native title or short ID>".
+                    Custom non-placeholder agent names remain untouched. */}
+                {displayName}
+              </p>
+              {isMain && <TicketTag cwd={session?.cwd} />}
+            </div>
             {subtitle && <p className="text-[11px] text-gray-500 truncate">{subtitle}</p>}
           </div>
         </div>
-        {/* compact: cards are narrow — inline reason chip would squeeze the
-            title, so the reason stays hover-tooltip-only here. */}
+        {/* compact: cards are narrow — the reason label replaces "Waiting"
+            instead of adding an inline chip that would squeeze the title. */}
         <div className="flex flex-shrink-0 items-center gap-1.5">
           {session?.todo_summary && (
             <TodoProgressIndicator progress={session.todo_summary} stopClickPropagation />

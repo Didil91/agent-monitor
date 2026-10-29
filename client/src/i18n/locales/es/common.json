@@ -64,6 +64,9 @@
       "desc": "El último turno fue interrumpido (Esc o un hook recuperado) — {{provider}} está esperando dirección."
     }
   },
+  "ticketTag": {
+    "title": "Ticket leído del directorio de trabajo de la sesión"
+  },
   "time": {
     "justNow": "ahora mismo",
     "mAgo": "hace {{count}}m",

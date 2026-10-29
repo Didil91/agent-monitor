@@ -34,6 +34,42 @@ function LocationProbe() {
 }
 
 describe("SessionCard", () => {
+  it("shows the ticket of a session running in a Cyrus worktree", () => {
+    render(
+      <MemoryRouter>
+        <SessionCard session={makeSession({ cwd: "C:\\Users\\Adil\\.cyrus\\worktrees\\PER-18" })} />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText("PER-18")).toBeInTheDocument();
+  });
+
+  it("shows no ticket outside a Cyrus worktree", () => {
+    render(
+      <MemoryRouter>
+        <SessionCard session={makeSession()} />
+      </MemoryRouter>
+    );
+
+    expect(screen.queryByTitle("Ticket read from the session's working directory")).toBeNull();
+  });
+
+  it("names the waiting reason instead of a bare Waiting", () => {
+    render(
+      <MemoryRouter>
+        <SessionCard
+          session={makeSession({
+            awaiting_input_since: "2026-08-02T00:01:00.000Z",
+            awaiting_reason: "stop",
+          })}
+        />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText("Turn done")).toBeInTheDocument();
+    expect(screen.queryByText("Waiting")).toBeNull();
+  });
+
   it("keeps a named Codex session title clean without a duplicate provider ID badge", () => {
     render(
       <MemoryRouter>
