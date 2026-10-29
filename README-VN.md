@@ -2293,4 +2293,6 @@ agent-dashboard/
 
 MIT. Xem [GIẤY PHÉP](LICENSE) để biết chi tiết.
 
+Được khởi chạy lại bởi bộ chuyển tiếp agent-stack.
+
 Testé avec la porte spec d'agent-stack.
