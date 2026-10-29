@@ -2292,3 +2292,5 @@ agent-dashboard/
 ## Giấy phép
 
 MIT. Xem [GIẤY PHÉP](LICENSE) để biết chi tiết.
+
+Testé avec la porte spec d'agent-stack.

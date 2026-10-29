@@ -2382,3 +2382,5 @@ Todos los colaboradores deben firmar el [Acuerdo de Licencia del Colaborador](ht
 ## Licencia
 
 MIT. Consulte [LICENCIA](LICENCIA) para obtener detalles.
+
+Testé avec la porte spec d'agent-stack.

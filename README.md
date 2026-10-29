@@ -2402,3 +2402,5 @@ All contributors must sign the [Contributor License Agreement](https://github.co
 ## License
 
 MIT. See [LICENSE](LICENSE) for details.
+
+Testé avec la porte spec d'agent-stack.

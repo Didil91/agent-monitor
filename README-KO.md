@@ -2387,3 +2387,5 @@ agent-dashboard/
 ## 라이선스
 
 MIT. 자세한 내용은 [LICENSE](LICENSE)를 참조하십시오.
+
+Testé avec la porte spec d'agent-stack.
