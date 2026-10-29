@@ -2299,3 +2299,5 @@ agent-dashboard/
 ## 许可证
 
 MIT。详见 [LICENSE](LICENSE)。
+
+由 agent-stack 中继重新启动。
