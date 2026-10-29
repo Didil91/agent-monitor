@@ -64,6 +64,9 @@
       "desc": "마지막 턴이 중단되었습니다(Esc 또는 복구된 훅) — {{provider}}가 지시를 기다리고 있습니다."
     }
   },
+  "ticketTag": {
+    "title": "세션 작업 디렉터리에서 읽은 티켓"
+  },
   "time": {
     "justNow": "방금 전",
     "mAgo": "{{count}}분 전",

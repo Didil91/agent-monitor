@@ -64,6 +64,9 @@
       "desc": "Lượt vừa rồi bị ngắt (Esc hoặc hook được khôi phục) — {{provider}} đang chờ chỉ dẫn của bạn."
     }
   },
+  "ticketTag": {
+    "title": "Ticket được đọc từ thư mục làm việc của phiên"
+  },
   "time": {
     "justNow": "vừa xong",
     "mAgo": "{{count}} phút trước",

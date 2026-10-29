@@ -99,6 +99,7 @@ import { SessionOverview } from "../components/SessionOverview";
 import { TodoProgressPanel } from "../components/TodoProgressPanel";
 import { ConversationView } from "../components/conversation/ConversationView";
 import { SessionStatusBadge, AgentStatusBadge, REASON_ICONS } from "../components/StatusBadge";
+import { TicketTag } from "../components/TicketTag";
 import { CopyButton } from "../components/event-views/primitives";
 import {
   effectiveSessionStatus,
@@ -662,6 +663,7 @@ export function SessionDetail() {
             <h2 className="text-xl font-semibold text-gray-100">
               {session.name || `${t("defaultName")}${session.id.slice(0, 8)}`}
             </h2>
+            <TicketTag cwd={session.cwd} />
             <SessionStatusBadge
               status={effectiveSessionStatus(session)}
               reason={sessionAwaitingReason(session)}

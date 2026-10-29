@@ -81,6 +81,7 @@ import { eventBus } from "../lib/eventBus";
 import { isRemoteDataRefreshMessage } from "../lib/remoteDataEvents";
 import { useDataScope } from "../lib/dataScope";
 import { SessionStatusBadge } from "../components/StatusBadge";
+import { TicketTag } from "../components/TicketTag";
 import { TodoProgressIndicator } from "../components/TodoProgressIndicator";
 import { EmptyState } from "../components/EmptyState";
 import { TableRowSkeleton } from "../components/Skeleton";
@@ -539,9 +540,12 @@ export function Sessions() {
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-2">
                         <div className="min-w-0 flex-1">
-                          <p className="text-sm font-medium text-gray-200">
-                            {session.name || `${t("defaultName")}${session.id.slice(0, 8)}`}
-                          </p>
+                          <div className="flex items-center gap-1.5">
+                            <p className="text-sm font-medium text-gray-200">
+                              {session.name || `${t("defaultName")}${session.id.slice(0, 8)}`}
+                            </p>
+                            <TicketTag cwd={session.cwd} />
+                          </div>
                           <p className="text-[11px] text-gray-600 font-mono">
                             {session.id.slice(0, 12)}
                           </p>

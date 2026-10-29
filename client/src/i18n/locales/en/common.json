@@ -64,6 +64,9 @@
       "desc": "The last turn was interrupted (Esc or a recovered hook) — {{provider}} is waiting for direction."
     }
   },
+  "ticketTag": {
+    "title": "Ticket read from the session's working directory"
+  },
   "time": {
     "justNow": "just now",
     "mAgo": "{{count}}m ago",

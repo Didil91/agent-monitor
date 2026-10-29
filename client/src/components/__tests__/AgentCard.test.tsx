@@ -494,7 +494,7 @@ describe("AgentCard", () => {
     expect(card?.className).toContain("border-l-yellow-500/60");
   });
 
-  it("keeps the card badge compact: reason is tooltip-only, no inline chip", () => {
+  it("keeps the card badge compact: the reason label replaces Waiting", () => {
     renderCard(
       <AgentCard
         agent={makeAgent({
@@ -504,10 +504,29 @@ describe("AgentCard", () => {
         })}
       />
     );
-    expect(screen.getByText("Waiting")).toBeInTheDocument();
-    // Cards are narrow — the inline chip would squeeze the title, so the
-    // reason must NOT render inline here (hover tooltip only).
-    expect(screen.queryByText("Needs input")).not.toBeInTheDocument();
+    // Cards are narrow — no extra inline chip; the reason takes the place of
+    // the generic "Waiting" label so the badge keeps the same width.
+    expect(screen.getByText("Needs input")).toBeInTheDocument();
+    expect(screen.queryByText("Waiting")).not.toBeInTheDocument();
+  });
+
+  it("shows the ticket on a main card running in a Cyrus worktree", () => {
+    renderCard(
+      <AgentCard
+        agent={makeAgent()}
+        session={{
+          id: "sess-1",
+          name: null,
+          status: "active",
+          cwd: "/home/x/.cyrus/worktrees/PER-17/server",
+          model: null,
+          started_at: "2026-03-05T10:00:00.000Z",
+          ended_at: null,
+          metadata: null,
+        }}
+      />
+    );
+    expect(screen.getByText("PER-17")).toBeInTheDocument();
   });
 
   it("degrades to a plain Waiting badge on an unknown awaiting_reason", () => {

@@ -64,6 +64,9 @@
       "desc": "Le dernier tour a été interrompu (Échap ou hook récupéré) — {{provider}} attend des instructions."
     }
   },
+  "ticketTag": {
+    "title": "Ticket lu depuis le dossier de travail de la session"
+  },
   "time": {
     "justNow": "à l'instant",
     "mAgo": "il y a {{count}} min",

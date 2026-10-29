@@ -881,7 +881,7 @@ interface AgentCardProps {
 
 #### StatusBadge
 
-Colored status pills for agents (`AgentStatusBadge`) and sessions (`SessionStatusBadge`). When a row is in the yellow **Waiting** overlay (`awaiting_input_since` set), an optional `reason` prop explains WHY: a hover tooltip carries the full explanation, and — unless `compact` is set — a small nested chip (icon + short label) renders inline. Card layouts (Kanban / Dashboard trees) pass `compact` so the chip never squeezes the card title; the Sessions table and session-detail header show the full chip:
+Colored status pills for agents (`AgentStatusBadge`) and sessions (`SessionStatusBadge`). When a row is in the yellow **Waiting** overlay (`awaiting_input_since` set), an optional `reason` prop explains WHY: a hover tooltip carries the full explanation, and a small nested chip (icon + short label) renders inline. Card layouts (Kanban / Dashboard trees) pass `compact`: the reason label then replaces the generic "Waiting" label instead of adding a chip, so the badge keeps its width and never squeezes the card title (unknown reasons still read "Waiting"); the Sessions table and session-detail header show "Waiting" plus the full chip:
 
 | `awaiting_reason` | Label | Meaning |
 | ----------------- | ----- | ------- |
@@ -896,11 +896,22 @@ interface AgentStatusBadgeProps {
   status: EffectiveAgentStatus;
   pulse?: boolean;
   reason?: AwaitingReason | null; // from agentAwaitingReason(agent)
-  compact?: boolean; // tooltip-only (no inline chip) for tight card layouts
+  compact?: boolean; // tight card layouts: reason label replaces "Waiting", no inline chip
 }
 ```
 
 Unknown/future server reasons degrade to a plain Waiting badge (`normalizeAwaitingReason` filters them to null). SessionDetail additionally renders a waiting-for-input banner (same reason + relative time) under the header via the shared `REASON_ICONS` map.
+
+#### TicketTag
+
+Small monospace tag naming the ticket a Cyrus-launched session works on (e.g. `PER-17`), read by `ticketFromCwd` (`src/lib/cyrusTicket.ts`) from a working directory under `.cyrus/worktrees/<TICKET>` (POSIX or Windows separators, subfolders included). Renders nothing for any other `cwd`; the dashboard never calls the ticketing tool. Shown next to the title on Kanban session cards, Dashboard main-agent cards, the Sessions table, and the session-detail header.
+
+**Props:**
+```typescript
+interface TicketTagProps {
+  cwd: string | null | undefined;
+}
+```
 
 #### ToolCard
 

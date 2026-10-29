@@ -64,6 +64,9 @@
       "desc": "上一回合被中断（Esc 或恢复的钩子）— {{provider}} 正在等待你的指示。"
     }
   },
+  "ticketTag": {
+    "title": "从会话工作目录识别的工单"
+  },
   "time": {
     "justNow": "刚刚",
     "mAgo": "{{count}}分钟前",
